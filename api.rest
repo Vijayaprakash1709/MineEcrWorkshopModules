@@ -1,0 +1,108 @@
+### Faculty proposing for an event
+POST http://localhost:1234/seminar/propose
+Content-Type: application/json
+
+{
+    "sno":1,
+    
+    "event_name":"Workshop",
+    "event_title":"React JS",
+    "event_organizer":"CSE",
+    "event_sponsor":"CSI & Management",
+    "event_date":"2023-10-20",
+    "event_venue":"Data analytics lab",
+    "guest_name":"Mr. Razak Mohamed",
+    "guest_designation":"Full stack trainer, Zealous",
+    "guest_address":"Salem",
+    "guest_number":8667002959,
+    "guest_email":"razaksrmd@gmail.com",
+    "student_count":64,
+    "faculty_count":3,
+    "others_count":0,
+    "proposal_date":"",
+    "proposal_hod":"",
+    "proposal_principal":"",
+    "event_budget":40000,
+    "event_coordinator":"Victor Prakash",
+  
+    "coordinator_phno":9944085437,
+    "coordinator_designation":406,
+    "acdyr_id":"",
+    "dept_id":1,
+    "sem_id":1
+}
+
+###
+
+GET http://localhost:1234/seminar/dept/1
+
+### HoD is receiving the requested proposal
+GET http://localhost:1234/ecrWorkshop/loadforlevel1/1/6001
+
+###
+
+### HoD approves the proposal
+PUT http://localhost:1234/ecrWorkshop/acknowledgelevel1/1/6001
+
+###
+
+### Principal is receiving the requested proposal
+GET http://localhost:1234/ecrWorkshop/loadforlevel2/1
+
+###
+
+### Principal approves the proposal
+PUT http://localhost:1234/ecrWorkshop/acknowledgelevel2/1/RPT0000001
+
+###
+
+################## Proposal over #####################
+
+###
+
+### Faculty is receiving his/her proposal after approved
+GET http://localhost:1234/ecrWorkshop/loadforCompletion/1
+
+###
+
+### Faculty is updating the completion report
+PUT http://localhost:1234/ecrWorkshop/ecrCompletion/RPT0000001
+Content-Type: application/json
+
+{
+    "event_photo_1":"photo/path1",
+    "event_photo_2":"photo/path2",
+    "event_po":"1,2,3,4",
+    "completion_date":"0000-00-00",
+    "completion_hod":"0000-00-00",
+    "completion_principal":"0000-00-00",
+    "pdf":"pdf/path",
+    "event_duration":"3hrs",
+    "event_os":"Dr. G. Kavitha",
+    "event_time":"10 am",
+    "event_description":"The event was about how to develop a webpage using React JS",
+    "event_budget_utilized":50000
+}
+
+###
+
+### HoD is receiving the completion report
+GET http://localhost:1234/ecrWorkshop/eventcompletionloadlevel1/1/6001
+
+###
+
+### HoD approves the completion report
+PUT http://localhost:1234/ecrWorkshop/completionacknowledgelevel1/1/6001
+
+###
+
+### Principal is receiving the completion report
+GET http://localhost:1234/ecrWorkshop/completionloadlevel2/1
+
+###
+
+### Principal approves the completion report
+PUT http://localhost:1234/ecrWorkshop/completionacknowledgelevel2/1/RPT0000001
+
+
+GET http://localhost:1234/seminar/find/1
