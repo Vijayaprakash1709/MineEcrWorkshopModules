@@ -96,6 +96,7 @@ export const CreateEvent=()=>{
                                     <td>{data.event_date}</td>
                                     <td>
                                         
+
                                     </td>
                                 </tr>
                             ))
@@ -104,8 +105,6 @@ export const CreateEvent=()=>{
                     </tbody>
                 </table>
                 </div>
-           
-       
    
                 </div>
        

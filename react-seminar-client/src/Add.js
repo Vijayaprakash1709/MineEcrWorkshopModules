@@ -142,7 +142,8 @@ export const Add=()=>{
      <div className="form group">
      <label >Nature of the event :</label>
                         <select name="event_name" className="form-select" value={seminar.event_name} onChange={infoCollect}  style={{width:'80%'}}>
-                        <option value="Workshop">Workshop</option>
+                        <option value="">Select Event Nature .......</option>
+                        <option value="data_ecr_workshop">Workshop</option>
                         <option value="Seminar">Seminar</option>
                         <option value="Conference">Conference</option>
                         <option value="Technical Symposium">Technical Symposium</option>
@@ -150,6 +151,7 @@ export const Add=()=>{
                         <option value="FDP">FDP</option>
                         </select>
                     </div>
+                
             <div className="form group">
                         <label for="event_title">Title of the Event :</label>
                         <input onChange={infoCollect} value={seminar.event_title} type="text" name="event_title" placeholder="Event Title" className="form-control"/>
@@ -170,6 +172,8 @@ export const Add=()=>{
 
       <label htmlFor="event_venue">Venue:</label>
       <select name="vevent_venue" value={seminar.event_venue} onChange={infoCollect}>
+        
+      <option value="">Select Venue ......</option>
         <option value="Seminar Hall I">Seminar Hall I</option>
         <option value="Seminar Hall II">Seminar Hall II</option>
         <option value="Cloud Computing Lab">Cloud Computing Lab</option>
@@ -209,6 +213,7 @@ export const Add=()=>{
 
       <label htmlFor="dept_id">Department:</label>
       <select name="dept_id" value={seminar.dept_id} onChange={infoCollect}>
+      <option value="">Select Department ......</option>
         <option value="1">CSE</option>
         <option value="2">ECE</option>
         <option value="3">EEE</option>
@@ -219,9 +224,10 @@ export const Add=()=>{
 
       <label>Event Coordinator</label>
                         <select name="event_coordinator" className="form-select" onChange={infoCollect} value={seminar.event_coordinator}>
+                        <option value="">Select Faculty</option>
                             {
                                 proposable.map((val,key)=>{
-                                    return (<option>{val}</option>)
+                                    return (<option value={val.faculty_id}>{val.faculty_name}</option>)
                                 })
                             }
                         </select>

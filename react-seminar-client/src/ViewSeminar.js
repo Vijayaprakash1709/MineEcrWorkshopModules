@@ -7,6 +7,12 @@ export const ViewSeminar=()=>{
     const[ecrs,setEcrs]=useState([])
     const[info,setInfo]=useState("")
 
+    const accept=async(dept_id,sno)=>{
+        const log=JSON.parse(sessionStorage.getItem("person"))
+        const data=await approveLevel1(dept_id,log.faculty_id,sno)
+        setInfo(data)
+        window.location.assign("/")
+    }
     const loadSeminars=async()=>{
         const logged=JSON.parse(sessionStorage.getItem("person"))
         const temp = await loadForLevel1(logged.faculty_dept,logged.faculty_id)
@@ -18,11 +24,11 @@ export const ViewSeminar=()=>{
     },[])
 
 
-    const acceptAll=async()=>{
-        const logged=JSON.parse(sessionStorage.getItem("person"))
-        const temp = await approveLevel1(logged.faculty_dept,logged.faculty_id)
-        setInfo(temp)
-    }
+    // const acceptAll=async()=>{
+    //     const logged=JSON.parse(sessionStorage.getItem("person"))
+    //     const temp = await approveLevel1(logged.faculty_dept,logged.faculty_id)
+    //     setInfo(temp)
+    // }
 
 
     return(
@@ -42,7 +48,7 @@ export const ViewSeminar=()=>{
         <table className="table table-stripped text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>ECR No</th><th>ECR Name</th><th>ECR Proposed by</th>
+                                        <th>ECR No</th><th>ECR Type</th><th>Title</th><th>Co-ordinator</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -50,23 +56,23 @@ export const ViewSeminar=()=>{
                                     {
                                         ecrs.map((val,key)=>(
                                             <tr>
-                                                <td>{val.seminar_id}</td>
-                                                <td>{val.seminar_name}</td>
-                                                <td>{val.eve_proposed_by}</td>
+                                                <td>{val.sno}</td>
+                                                <td>{val.event_name}</td>
+                                                <td>{val.event_title}</td>
+                                                <td>{val.event_coordinator}</td>
                                                 <td className="row justify-content-evenly">
-                                                    <button type="button" className="btn btn-success col-4">Accept</button>
+                                                <button type="button" onClick={async()=>{
+                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                        accept(val.dept_id,val.sno);
+                                                    }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
-                                                </td>
+                                                    </td>
                                             </tr>
                                         ))
                                     }
                                 </tbody>
                             </table>
-                            <div className="row justify-content-center">
-                                <button type="button" onClick={acceptAll} className="col-12 col-md-4 btn btn-outline-primary">
-                                    Accept All
-                                </button>
-                            </div>
+                         
 
       </div>
     </div>

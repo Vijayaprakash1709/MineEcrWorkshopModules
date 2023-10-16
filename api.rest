@@ -1,12 +1,12 @@
 ### Faculty proposing for an event
-POST http://localhost:1234/seminar/propose
+POST http://localhost:1234/seminar/propose/data_ecr_workshop
 Content-Type: application/json
 
 {
-    "sno":1,
+  
     
     "event_name":"Workshop",
-    "event_title":"React JS",
+    "event_title":"Express",
     "event_organizer":"CSE",
     "event_sponsor":"CSI & Management",
     "event_date":"2023-10-20",
@@ -37,12 +37,12 @@ Content-Type: application/json
 GET http://localhost:1234/seminar/dept/1
 
 ### HoD is receiving the requested proposal
-GET http://localhost:1234/ecrWorkshop/loadforlevel1/1/6001
+GET http://localhost:1234/seminar/loadforlevel1/1/6001
 
 ###
 
 ### HoD approves the proposal
-PUT http://localhost:1234/ecrWorkshop/acknowledgelevel1/1/6001
+PUT http://localhost:1234/seminar/acknowledgelevel1/1/6001/1
 
 ###
 

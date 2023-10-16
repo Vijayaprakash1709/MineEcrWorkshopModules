@@ -101,7 +101,7 @@ route.get('/loadforlevel1/:deptId/:empId',async(req,res)=>{
     })
 })
 
-route.put('/acknowledgelevel1/:deptId/:empId',async(req,res)=>{
+route.put('/acknowledgelevel1/:deptId/:empId/:rId',async(req,res)=>{
     const dId=req.params.deptId
     const eId=req.params.empId
     let sql="select report_id from data_ecr_workshop where dept_id=? and approval_status=0 and is_eve_completed=0"
@@ -134,8 +134,8 @@ route.put('/acknowledgelevel1/:deptId/:empId',async(req,res)=>{
             console.log(count)
             //upto this
             if(rows[0][0].column_value.includes(eId)){
-                sql="update data_ecr_workshop set report_lvl1=?, approval_status=approval_status+1 where dept_id=? and approval_status=0 and is_eve_completed=0"
-                base.query(sql,[eId,dId],(err,result)=>{
+                sql="update data_ecr_workshop set report_lvl1=?, approval_status=approval_status+1 where dept_id=? and approval_status=0 and is_eve_completed=0 and report_id=?"
+                base.query(sql,[eId,dId,req.params.rId],(err,result)=>{
                     if(err){
                         res.status(500).json({error:err.message})
                         return
