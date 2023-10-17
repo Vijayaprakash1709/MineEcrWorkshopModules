@@ -19,7 +19,7 @@ export const onProposalsLoad=async(dept_id)=>{
 }
 
 export const onPropose=async(obj)=>{
-    alert(JSON.stringify(obj))
+    // alert(JSON.stringify(obj))
     const returned = await axios.post(`${url}/seminar/propose/${obj.event_name}`,obj)
     return returned.data
 }
