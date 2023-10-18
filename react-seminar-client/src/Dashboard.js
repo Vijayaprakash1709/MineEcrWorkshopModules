@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { HodDashboard } from "./HodDashboard"
 import { FacultyPage } from "./FacultyPage"
 import { Add } from "./Add"
+import { PrincipalDashboard } from "./PrincipalDashboard"
+
 
 
 
@@ -18,6 +20,12 @@ export const Dashboard=()=>{
             setHodLog(true)
         }
     },[])
+    useEffect(()=>{
+        const logged=JSON.parse(sessionStorage.getItem("person"))
+        if(logged.faculty_desig===401){
+            setPrincipalLog(true)
+        }
+    },[])
 
     return(
         <>
@@ -25,7 +33,7 @@ export const Dashboard=()=>{
                 (principalLog)
                 ?
                 <>
-
+                <PrincipalDashboard/>
                 </>
                 :
                 (hodLog)?

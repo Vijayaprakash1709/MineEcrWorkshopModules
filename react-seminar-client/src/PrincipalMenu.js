@@ -24,7 +24,7 @@ export const PrincipalMenu=()=>{
                     <Navbar.Toggle aria-controls="hod" />
                     <Navbar.Collapse id="hod">
                         <Nav className="ms-auto">
-                            <a className="me-2 btn btn-outline-success" href="/ecr">View ECR</a>
+                            <a className="me-2 btn btn-outline-success" href="/ViewReqPrincipal">View ECR</a>
                             <a className="me-2 btn btn-outline-success" href="/setaf">View SetAf</a>
                             <a className="me-2 btn btn-outline-success" href="/faculties">Filter Faculties</a>
                             <a className="me-2 btn btn-outline-success" href="/shortecr">Filter ECR</a>

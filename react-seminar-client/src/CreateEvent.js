@@ -1,7 +1,6 @@
 
 import {Table} from './connect';
 import React, { useState, useEffect} from 'react';
-
 import "./sty.css"
 
 export const CreateEvent=()=>{
@@ -12,7 +11,6 @@ export const CreateEvent=()=>{
         const res=await Table()
           setAllvalues(res.data)
         }
-        
         useEffect(() =>{
          doSomething();
         },[])
@@ -21,7 +19,6 @@ export const CreateEvent=()=>{
     //       const res=await Table()
     //       setAllvalues(res.data)
     //   },[])
-     
 
     return(
         <>
@@ -41,11 +38,8 @@ export const CreateEvent=()=>{
                   </div>
             </div>
  <div class="sel">
-<style>
-   
+<style>  
     </style>
-
-
         <div class="button-container">
           <button class="menu-button" data-category="Technical Symposium">Technical Symposium</button>
           <button class="menu-button" data-category="Student Techtalk">Student Techtalk</button>
@@ -56,21 +50,12 @@ export const CreateEvent=()=>{
           <button class="menu-button" data-category="GUEST Lectures">GUEST Lectures</button>
           <button class="menu-button" data-category="AIM">AIM</button>
         </div>
-      
 </div>
-            
- 
-               
- 
             <div class="report-container">
                 <div class="report-header">
                     <h1 class="recent-Articles">Your Reports</h1>
                     <a className="topic-heading" href="/add"><button class="view" id="addButton">+ Add</button></a>
-                    
-
-                </div>
-
- 
+                              </div>
    <table className='table table-striped '>
                     <thead>
                         <tr>
@@ -86,27 +71,19 @@ export const CreateEvent=()=>{
                             allvalues.map((data)=>
                             (
                                 <tr>
-                                    
-                                        
-                                    
-                                    
                                     <td>{data.sno}</td>
                                     <td>{data.event_title}</td>
                                     <td>{data.event_organizer}</td>
                                     <td>{data.event_date}</td>
                                     <td>
-                                        
-
                                     </td>
                                 </tr>
                             ))
-
                         }
                     </tbody>
                 </table>
                 </div>
-   
-                </div>
+                   </div>
        
         </>
     )

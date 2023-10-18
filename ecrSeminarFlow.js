@@ -74,6 +74,23 @@ router.get('/loadforlevel1/:deptId/:empId',async(req,res)=>{
     })
 })
 
+router.get('/loadforlevel2',async(req,res)=>{
+    const dId=req.params.deptId
+    let sql="select * from data_ecr_workshop where approval_status=1 and is_eve_completed=0 "
+    base.query(sql,[dId],(err,row)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        if(row.length==0){
+            res.status(404).json({error:"No workshop to be approved"})
+            return
+        }
+        res.status(200).json({row})
+    })
+})
+
+
 router.put('/acknowledgelevel1/:deptId/:empId/:sno',async(req,res)=>{
     const dId=req.params.deptId
     const eId=req.params.empId
@@ -182,6 +199,50 @@ router.put('/acknowledgelevel2/:deptId/:empId/:sno',async(req,res)=>{
             else{
                 res.status(404).json({error:"Forbidden access"})
             }
+        })
+    })
+})
+
+
+router.put('/acknowedgelevel2/:deptId/:wid',async(req,res)=>{
+    const dId=req.params.deptId
+    const wid=req.params.wid
+    let sql="update data_ecr_workshop set report_lvl2=6000, eve_status=eve_status+1 where dept_id=? and sno=?"
+    base.query(sql,[dId,wid],(err,result)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        if(result.affectedRows==0){
+            res.status(404).json({error:"Nothing has approved"})
+            return
+        }
+        //res.status(200).json({message:`${wid} approved by principal`})
+        sql="call GetNonNullColumnsForDeptId(?)"
+        base.query(sql,[dId],(err,rows)=>{
+            if(err){
+                res.status(500).json({error:err.message})
+                return
+            }
+            if(rows.length==0){
+                res.status(404).json({error:"No records available to acknowledge"})
+                return
+            }
+            console.log(rows[0])
+            let count=rows.length
+            console.log(count)
+            sql="update data_ecr_workshop set is_eve_completed=1 where sno=? and approval_status=?"
+            base.query(sql,[wid,count],(err,result)=>{
+                if(err){
+                    res.status(500).json({error:err.message})
+                    return
+                }
+                if(result.affectedRows==0){
+                    res.status(404).json({error:"Event can't approved"})
+                    return
+                }
+                res.status(200).json({message:`Event Completed ${dId}`})
+            })
         })
     })
 })

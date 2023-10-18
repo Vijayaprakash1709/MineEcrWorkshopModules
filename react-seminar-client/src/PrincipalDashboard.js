@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { HodMenu } from "./HodMenu"
-import { ViewSeminar } from "./ViewSeminar"
+import { PrincipalMenu } from "./PrincipalMenu"
+import { ViewReqPrincipal } from "./ViewReqPriincipal"
 
-export const HodDashboard=()=>{
+export const PrincipalDashboard=()=>{
     return(
         <>
             <BrowserRouter>
                 <PrincipalMenu/>
-                <ViewSeminar/>
+                <ViewReqPrincipal/>
                 <Routes>
                     {/* <Route path="ecr" element={<ViewSeminar/>} /> */}
                     {/* <Route path="setaf" element={<ViewSetAfs/>} />

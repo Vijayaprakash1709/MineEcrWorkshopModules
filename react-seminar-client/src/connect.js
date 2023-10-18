@@ -42,3 +42,14 @@ export const Table=async()=>
     // console.log(temp.data)
     return temp;
 }
+
+export const callLoadForLevel2=async()=>{
+    // alert("axios called")
+    const receive = await axios.put(`${url}/seminar/loadforlevel2`);
+    return receive.data.row
+}
+
+export const callAcceptLevel2=async(dept,wid)=>{
+    const response=await axios.put(`${url}/ecr/acknowedgelevel2/${dept}/${wid}`)
+    return response.data.message
+}

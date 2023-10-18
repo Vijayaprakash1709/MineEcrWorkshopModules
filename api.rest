@@ -47,12 +47,12 @@ PUT http://localhost:1234/seminar/acknowledgelevel1/1/6001/1
 ###
 
 ### Principal is receiving the requested proposal
-GET http://localhost:1234/ecrWorkshop/loadforlevel2/1
+GET http://localhost:1234/seminar/loadforlevel2
 
 ###
 
 ### Principal approves the proposal
-PUT http://localhost:1234/ecrWorkshop/acknowledgelevel2/1/RPT0000001
+PUT http://localhost:1234/seminar/acknowledgelevel2/1/2
 
 ###
 
