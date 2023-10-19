@@ -8,6 +8,11 @@ export const PrincipalDashboard=()=>{
             <BrowserRouter>
                 <PrincipalMenu/>
                 <ViewReqPrincipal/>
+                <>
+                <head>
+                    
+                </head>
+                </>
                 <Routes>
                     {/* <Route path="ecr" element={<ViewSeminar/>} /> */}
                     {/* <Route path="setaf" element={<ViewSetAfs/>} />

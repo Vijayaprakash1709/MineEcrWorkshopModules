@@ -149,66 +149,66 @@ router.put('/acknowledgelevel1/:deptId/:empId/:sno',async(req,res)=>{
 
 //Principal Approval
 
-router.put('/acknowledgelevel2/:deptId/:empId/:sno',async(req,res)=>{
+// router.put('/acknowledgelevel2/:deptId/:empId/:sno',async(req,res)=>{
+//     const dId=req.params.deptId
+//     const eId=req.params.empId
+//     const sno=req.params.sno
+//     let sql="select sno from data_ecr_workshop where dept_id=? and approval_status=1 and is_eve_completed=0 "
+//     base.query(sql,[dId],(err,row)=>{
+//         if(err){
+//             res.status(500).json({error:err.message})
+//             console.log("selecting workshop")
+//             return
+//         }
+//         if(row.length==0){
+//             res.status(404).json({error:"No records available to acknowledge"})
+//             console.log("selecting workshop records")
+//             return
+//         }
+//         //no need
+//         sql="call GetNonNullColumnsForDeptId(?)"
+//         base.query(sql,[dId],(err,rows)=>{
+//             if(err){
+//                 res.status(500).json({error:err.message})
+//                 return
+//             }
+//             if(rows.length==0){
+//                 res.status(404).json({error:"No records available to acknowledge"})
+//                 return
+//             }
+//             console.log(rows[0])
+//             let count=rows.length
+//             // for (let index = 0; index < rows.length; index++) 
+//             // {count++;}
+//             console.log(count)
+//             //upto this
+//             if(rows[0][0].column_value.includes(eId)){
+//                 sql="update data_ecr_workshop set report_lvl1=?, approval_status=approval_status+1 where dept_id=? and approval_status=0 and is_eve_completed=0 and sno=?"
+//                 base.query(sql,[eId,dId,sno],(err,result)=>{
+//                     if(err){
+//                         res.status(500).json({error:err.message})
+//                         return
+//                     }
+//                     if(result.affectedRows==0){
+//                         res.status(404).json({error:"Event hasn't completed yet"})
+//                         return
+//                     }
+//                     res.status(200).json({message:"acknowledged by level"})
+//                 })
+//             }
+//             else{
+//                 res.status(404).json({error:"Forbidden access"})
+//             }
+//         })
+//     })
+// })
+
+
+router.put('/acknowedgelevel2/:deptId/:sno',async(req,res)=>{
     const dId=req.params.deptId
-    const eId=req.params.empId
     const sno=req.params.sno
-    let sql="select sno from data_ecr_workshop where dept_id=? and approval_status=1 and is_eve_completed=0 "
-    base.query(sql,[dId],(err,row)=>{
-        if(err){
-            res.status(500).json({error:err.message})
-            console.log("selecting workshop")
-            return
-        }
-        if(row.length==0){
-            res.status(404).json({error:"No records available to acknowledge"})
-            console.log("selecting workshop records")
-            return
-        }
-        //no need
-        sql="call GetNonNullColumnsForDeptId(?)"
-        base.query(sql,[dId],(err,rows)=>{
-            if(err){
-                res.status(500).json({error:err.message})
-                return
-            }
-            if(rows.length==0){
-                res.status(404).json({error:"No records available to acknowledge"})
-                return
-            }
-            console.log(rows[0])
-            let count=rows.length
-            // for (let index = 0; index < rows.length; index++) 
-            // {count++;}
-            console.log(count)
-            //upto this
-            if(rows[0][0].column_value.includes(eId)){
-                sql="update data_ecr_workshop set report_lvl1=?, approval_status=approval_status+1 where dept_id=? and approval_status=0 and is_eve_completed=0 and sno=?"
-                base.query(sql,[eId,dId,sno],(err,result)=>{
-                    if(err){
-                        res.status(500).json({error:err.message})
-                        return
-                    }
-                    if(result.affectedRows==0){
-                        res.status(404).json({error:"Event hasn't completed yet"})
-                        return
-                    }
-                    res.status(200).json({message:"acknowledged by level"})
-                })
-            }
-            else{
-                res.status(404).json({error:"Forbidden access"})
-            }
-        })
-    })
-})
-
-
-router.put('/acknowedgelevel2/:deptId/:wid',async(req,res)=>{
-    const dId=req.params.deptId
-    const wid=req.params.wid
-    let sql="update data_ecr_workshop set report_lvl2=6000, eve_status=eve_status+1 where dept_id=? and sno=?"
-    base.query(sql,[dId,wid],(err,result)=>{
+    let sql="update data_ecr_workshop set report_lvl2=6000, approval_status=approval_status+1 where dept_id=? and sno=?"
+    base.query(sql,[dId,sno],(err,result)=>{
         if(err){
             res.status(500).json({error:err.message})
             return
@@ -232,13 +232,13 @@ router.put('/acknowedgelevel2/:deptId/:wid',async(req,res)=>{
             let count=rows.length
             console.log(count)
             sql="update data_ecr_workshop set is_eve_completed=1 where sno=? and approval_status=?"
-            base.query(sql,[wid,count],(err,result)=>{
+            base.query(sql,[sno,count],(err,result)=>{
                 if(err){
                     res.status(500).json({error:err.message})
                     return
                 }
                 if(result.affectedRows==0){
-                    res.status(404).json({error:"Event can't approved"})
+                    res.status(404).json({error:"Event approved"})
                     return
                 }
                 res.status(200).json({message:`Event Completed ${dId}`})
@@ -246,5 +246,7 @@ router.put('/acknowedgelevel2/:deptId/:wid',async(req,res)=>{
         })
     })
 })
+
+
 
 module.exports=router

@@ -52,7 +52,7 @@ GET http://localhost:1234/seminar/loadforlevel2
 ###
 
 ### Principal approves the proposal
-PUT http://localhost:1234/seminar/acknowledgelevel2/1/2
+PUT http://localhost:1234/seminar/acknowedgelevel2/1/2
 
 ###
 

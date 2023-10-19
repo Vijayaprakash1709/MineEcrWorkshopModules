@@ -32,7 +32,7 @@ export const loadForLevel1=async(dept,emp)=>{
 
 export const approveLevel1=async(dept,emp,sno)=>{
     const receive = await axios.put(`${url}/seminar/acknowledgelevel1/${dept}/${emp}/${sno}`)
-    return receive.data.message
+    return receive.data
 }
 export const Table=async()=>
 {
@@ -45,11 +45,13 @@ export const Table=async()=>
 
 export const callLoadForLevel2=async()=>{
     // alert("axios called")
-    const receive = await axios.put(`${url}/seminar/loadforlevel2`);
-    return receive.data.row
+    const receive = await axios.get(`${url}/seminar/loadforlevel2`);
+    // alert(receive.data.row)
+    return receive.data
+    
 }
 
-export const callAcceptLevel2=async(dept,wid)=>{
-    const response=await axios.put(`${url}/ecr/acknowedgelevel2/${dept}/${wid}`)
-    return response.data.message
+export const callAcceptLevel2=async(dept,sno)=>{
+    const response=await axios.put(`${url}/seminar/acknowedgelevel2/${dept}/${sno}`)
+    return response.data
 }

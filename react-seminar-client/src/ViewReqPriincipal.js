@@ -8,17 +8,18 @@ export const ViewReqPrincipal=()=>{
     const[ecrs,setEcrs]=useState([])
     const[info,setInfo]=useState("")
 
-    const accept=async(dept_id,sno)=>{
-        // const log=JSON.parse(sessionStorage.getItem("person"))
-        const data=await callAcceptLevel2(dept_id,sno)
-        setInfo(data)
-        // window.location.assign("/")
-    }
+    // const accept=async(dept_id,sno)=>{
+    //     const log=JSON.parse(sessionStorage.getItem("person"))
+    //     const data=await callAcceptLevel2(dept_id,sno)
+    //     setInfo(data)
+    //     window.location.assign("/")
+      
+    // }
     const loadSeminars=async()=>{
-        // const logged=JSON.parse(sessionStorage.getItem("person"))
-        const temp = await callLoadForLevel2() 
-        
-        setEcrs(temp)
+        const logged=JSON.parse(sessionStorage.getItem("person"))
+        const temp = await callLoadForLevel2()
+        // alert(temp.row)
+        setEcrs(temp.row)
     }
 
     useEffect(()=>{
@@ -47,6 +48,9 @@ export const ViewReqPrincipal=()=>{
         <div className="report-header">
           <h1 className="recent-Articles">Requests</h1>
         </div>
+        <div>
+        <h1 className="text-center text-success">{info}</h1>
+        </div>
         <table className="table table-stripped text-nowrap">
                                 <thead>
                                     <tr>
@@ -56,6 +60,7 @@ export const ViewReqPrincipal=()=>{
                                 </thead>
                                 <tbody>
                                 {
+                                   
                                         ecrs.map((val,key)=>(
                                             <tr>
                                                 <td>{val.sno}</td>
@@ -65,7 +70,13 @@ export const ViewReqPrincipal=()=>{
                                                 <td className="row justify-content-evenly">
                                                 <button type="button" onClick={async()=>{
                                                         // alert(val.workshop_id+" "+val.dept_id)
-                                                        accept(val.dept_id,val.sno);
+                                                        const temp=await callAcceptLevel2(val.dept_id,val.sno)
+                                                        setInfo(temp)
+                                                        if(info===400){
+                                                            <h1>No request found</h1>
+                                                        }
+                                                        window.location.assign("/")
+                                                        
                                                     }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
                                                     </td>
@@ -74,6 +85,7 @@ export const ViewReqPrincipal=()=>{
                                     }
                                 </tbody>
                             </table>
+                            
                          
 
       </div>

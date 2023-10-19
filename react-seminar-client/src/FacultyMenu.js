@@ -1,13 +1,16 @@
 import { Container, Nav, Navbar } from "react-bootstrap"
 
 export const FacultyMenu=()=>{
+    const logged=JSON.parse(sessionStorage.getItem("person"))
     return(
         <>
                <head>
  
  <div class="logosec">
   
-         <div class="logo">Welcome </div> 
+         <div class="logo">Welcome ,  {
+         logged.faculty_name
+         } </div> 
 
      </div>
      <img src=
@@ -22,6 +25,9 @@ export const FacultyMenu=()=>{
                     <Navbar.Toggle aria-controls="faculty" />
                     <Navbar.Collapse id="faculty">
                         <Nav className="ms-auto">
+                            <div>
+                               
+                            </div>
 
                             <button className="me-2 btn btn-outline-danger" onClick={()=>{
                                 sessionStorage.removeItem("person")

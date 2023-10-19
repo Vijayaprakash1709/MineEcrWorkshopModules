@@ -30,13 +30,12 @@ export const Dashboard=()=>{
     return(
         <>
             {
-                (principalLog)
-                ?
+                (principalLog) ?
                 <>
                 <PrincipalDashboard/>
                 </>
                 :
-                (hodLog)?
+                (hodLog) ?
                 <>
                     <HodDashboard/>
                 </>

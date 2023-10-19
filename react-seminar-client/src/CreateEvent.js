@@ -20,9 +20,12 @@ export const CreateEvent=()=>{
     //       setAllvalues(res.data)
     //   },[])
 
+   
+
+
     return(
         <>
-        
+      
         <div class="main">
  
             <div class="searchbar2">
@@ -59,11 +62,21 @@ export const CreateEvent=()=>{
    <table className='table table-striped '>
                     <thead>
                         <tr>
-                            <th>ECR id</th>
-                            <th>Event Type</th>
-                            <th>Title</th>
+                            <th>S No</th>
+                            <th>Event Title</th>
                             <th>Date</th>
-                            <th>HoD</th>
+                            <th></th>
+                            <th></th>
+                            <th>
+
+                            </th>
+                            <th>Proposal</th>
+                            <th>
+
+                            </th>
+                            <th></th><th>Completion</th><th></th>
+                            </tr>
+                            <tr><th></th><th></th><th></th> <th></th><th></th><th>Submitted on</th><th>Hod</th><th>Principal</th><th>Submitted on</th><th>Hod</th><th>Principal</th><th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,10 +86,47 @@ export const CreateEvent=()=>{
                                 <tr>
                                     <td>{data.sno}</td>
                                     <td>{data.event_title}</td>
-                                    <td>{data.event_organizer}</td>
                                     <td>{data.event_date}</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
+                                        {data.proposal_date}
                                     </td>
+                                    {
+                                (data.approval_status===0) ?
+                                <>
+               
+                                        <td>🕒Pending</td>
+                                        <td>🕒Pending</td>
+                                        <td></td>
+                                        <td>🕒Pending</td>
+                                        <td>🕒Pending</td>
+                                        </>
+                                        :
+                                        (data.approval_status===1) ? 
+                                        <>
+                                        
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td>🕒Pending</td>
+                                        <td></td>
+                                        <td>🕒Pending</td>
+                                        <td>🕒Pending</td>
+                                        </>
+                                        :
+                                        (data.approval_status===2) ?
+                                        <>
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td></td>
+                                        <td>🕒Pending</td>
+                                        <td>🕒Pending</td>
+                                        </>
+                                        :
+                                        <>
+
+                                        </>
+}
+                                    
                                 </tr>
                             ))
                         }
