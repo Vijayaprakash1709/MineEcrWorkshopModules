@@ -5,19 +5,25 @@ export const FacultyMenu=()=>{
     return(
         <>
                <head>
- 
- <div class="logosec">
-  
-         <div class="logo">Welcome ,  {
-         logged.faculty_name
-         } </div> 
-
-     </div>
-     <img src=
+               <img src=
 "https://mec.edu.in/wp-content/uploads/2021/02/main-logo.png"
              class="icn menuicn"
              id="menuicn"
-             alt="menu-icon"/>  
+             alt="menu-icon"/> 
+ 
+ <div class="logosec">
+  
+         <div class="logo"> 
+         Name : {
+         logged.faculty_name
+         } 
+            </div>
+            </div>
+            <div style={{color :'#3236a8',fontSize:'27px',fontWeight:'bold'}}>
+         ID: {logged.faculty_id}</div> 
+
+     
+     
      <Navbar bg="light" expand="lg">
                 <Container>
                     <Navbar.Brand href="/">

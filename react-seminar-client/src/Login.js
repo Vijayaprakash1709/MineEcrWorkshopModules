@@ -37,8 +37,8 @@ export const Login=()=>{
                     </div>
                     <div className="col-12 col-sm-12 col-md-4 col-lg-5 shadow p-5 rounded-2">
                         <div className="form group">
-                            <label>Username</label>
-                            <input type="email" name="mail" value={logger.mail} onChange={gather} placeholder="Email to login" className="form-control" />
+                            <label>Faculty ID</label>
+                            <input type="email" name="mail" value={logger.mail} onChange={gather} placeholder="Faculty Id to login" className="form-control" />
                         </div>
                         <div className="form group">
                             <label>Password</label>

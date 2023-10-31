@@ -54,7 +54,7 @@ export const CreateEvent=()=>{
           <button class="menu-button" data-category="AIM">AIM</button>
         </div>
 </div>
-            <div class="report-container">
+            <div class="report-container1">
                 <div class="report-header">
                     <h1 class="recent-Articles">Your Reports</h1>
                     <a className="topic-heading" href="/add"><button class="view" id="addButton">+ Add</button></a>
@@ -62,7 +62,7 @@ export const CreateEvent=()=>{
    <table className='table table-striped '>
                     <thead>
                         <tr>
-                            <th>S No</th>
+                            <th>ID</th>
                             <th>Event Title</th>
                             <th>Date</th>
                             <th></th>
@@ -122,8 +122,17 @@ export const CreateEvent=()=>{
                                         <td>🕒Pending</td>
                                         </>
                                         :
+                                        (data.approval_status===-1) ?
                                         <>
+                                           <td><h3 style={{color:'red'}}>Rejected</h3></td>
+                                        <td>-</td>
+                                        <td></td>
+                                        <td>-</td>
+                                        <td>-</td>
 
+                                        </>
+                                        :
+                                        <>
                                         </>
 }
                                     

@@ -2,13 +2,17 @@ import { Container, Nav, Navbar } from "react-bootstrap"
 import './sty.css'
 
 export const HodMenu=()=>{
+    const logged=JSON.parse(sessionStorage.getItem("person"))
     return(
         <>
         <head>
  
  <div class="logosec">
-         <div class="logo">Welcome </div>
-        
+         
+         <div class="logo">Welcome ,  {
+         logged.faculty_name
+         } </div> 
+
          
      </div>
      <img src=

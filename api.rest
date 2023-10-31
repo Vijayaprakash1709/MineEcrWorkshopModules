@@ -32,6 +32,49 @@ Content-Type: application/json
     "sem_id":1
 }
 
+
+
+
+
+###
+
+POST http://localhost:1234/seminar/ecrProposal/data_management_Seminar
+Content-Type: application/json
+
+{
+    "report_id":"RPT5005",
+    "event_name":"seminar",
+    "event_title":"Vue JS",
+    "event_organizer":"CSE",
+    "event_sponsor":"CSI & Management",
+    "event_date":"2023-10-20",
+    "event_venue":"Data analytics lab",
+    "guest_name":"Mr. Razak Mohamed",
+    "guest_designation":"Full stack trainer, Zealous",
+    "guest_address":"Salem",
+    "guest_phone_number":8667002959,
+    "guest_email":"razaksrmd@gmail.com",
+    "student_count":64,
+    "faculty_count":3,
+    "others_count":0,
+    "event_budget":40000,
+    "event_coordinator":"Victor Prakash",
+    "coordinator_emp_id":6007,
+    "coordinator_phone_number":9944085437,
+    "coordinator_designation":406,
+    "event_date_from":"0000-00-00",
+    "event_date_to":"0000-00-00",
+    "acdyr_id":3,
+    "dept_id":4,
+    "sem_id":1
+}
+
+
+
+###
+
+GET http://localhost:1234/seminar/supply/Cloud-2023-09-11-1694405954
+
 ###
 
 GET http://localhost:1234/seminar/dept/1

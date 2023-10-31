@@ -15,19 +15,22 @@ export const onProposalsLoad=async(dept_id)=>{
         returned.data.rows.map((v)=>{
             ids.push(v)
         })
+        
         return ids
 }
 
 export const onPropose=async(obj)=>{
     // alert(JSON.stringify(obj))
-    const returned = await axios.post(`${url}/seminar/propose/${obj.event_name}`,obj)
+    const returned = await axios.post(`${url}/seminar/ecrProposal/${obj.event_name}`,obj)
     return returned.data
 }
 
 
 export const loadForLevel1=async(dept,emp)=>{
+    // alert(dept)
     const receive = await axios.get(`${url}/seminar/loadForLevel1/${dept}/${emp}`)
     return receive.data.rows
+
 }
 
 export const approveLevel1=async(dept,emp,sno)=>{

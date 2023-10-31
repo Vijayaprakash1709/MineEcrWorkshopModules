@@ -23,7 +23,7 @@ export const FacultyPage=()=>{
           
             <div className="box box3"id="ecr">
                     
-                    <h2 className="topic-heading" >ProSAC</h2>  
+                    <h2 className="topic-heading" >IV</h2>  
             </div>
  
                 <div className="box box4" id ="set">
@@ -35,7 +35,7 @@ export const FacultyPage=()=>{
 </div>
 
  
-            <div className="report-container">
+            <div className="report-container1">
                 <div className="report-header">
                     <h1 className="recent-Articles">Requests</h1>
                     <h6>Your request will visible here </h6>

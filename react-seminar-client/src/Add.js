@@ -2,6 +2,8 @@
 import { useState } from "react"
 import "./sty.css";
 import { onProposalsLoad, onPropose } from "./connect"
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 export const Add=()=>{
 
@@ -13,6 +15,7 @@ export const Add=()=>{
 
     const[seminar,setSeminar]=useState({
         
+        "report_id":"",
         "event_name":"",
         "event_title":"",
         "event_organizer":"",
@@ -22,23 +25,24 @@ export const Add=()=>{
         "guest_name":"",
         "guest_designation":"",
         "guest_address":"",
-        "guest_number":0,
+        "guest_phone_number":0,
         "guest_email":"",
         "student_count":0,
         "faculty_count":0,
         "others_count":0,
-        "proposal_date":"",
-        "proposal_hod":"",
-        "proposal_principal":"",
         "event_budget":0,
         "event_coordinator":"",
-        "coordinator_phno":0,
+        "coordinator_emp_id":0,
+        "coordinator_phone_number":0,
         "coordinator_designation":0,
-        "acdyr_id":"",
-        "dept_id":1,
+        "event_date_from":"0000-00-00",
+        "event_date_to":"0000-00-00",
+        "acdyr_id":0,
+        "dept_id":0,
         "sem_id":0
         
     })
+    console.log(seminar);
 
     const[proposable,setProposable]=useState([])
 
@@ -82,51 +86,11 @@ export const Add=()=>{
          <body>
         <div class="main" >
 
-            {/* <div className="row justify-content-center">
-
-                <div className="col-12 col-sm-12 col-md-8 col-lg-6 shadow rounded-1 p-5">
-                    <h1>{information}</h1>
-                    <div className="form group">
-                        <label>Seminar Name</label>
-                        <input onChange={infoCollect} value={seminar.seminar_name} type="text" name="seminar_name" placeholder="Seminar Name" className="form-control" />
-                    </div>
-                    <div className="form group">
-                        <label>Seminar Deaprtment</label>
-                        <select name="dept_id" className="form-select" value={seminar.dept_id} onChange={infoCollect}>
-                            <option value="1">CSE</option>
-                            <option value="3">EEE</option>
-                            <option value="5">IT</option>
-                        </select>
-                    </div>
-                    <div className="form group">
-                        <label>Select Coordinator</label>
-                        <select name="proposed_by" className="form-select" onChange={infoCollect} value={seminar.proposed_by}>
-                            {
-                                proposable.map((val,key)=>{
-                                    return (<option>{val}</option>)
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className='row mt-5 justify-content-around'>
-                        <input type='button' onClick={callPropose} value="Propose" className='col-3 btn btn-primary' />
-                        <input type='button' onClick={()=>{
-                            setSeminar(()=>{
-                                return{
-                                    "seminar_name":"",
-                                    "dept_id":0,
-                                    "proposed_by":0
-                                }
-                            })
-                        }} value="Clear" className='col-3 btn btn-danger' />
-                    </div>
-                    </div>
-                </div> */}
             
          
 
 
- <div class="report-container" style={{width:'50%' ,justifyContent:'center'}}>
+ <div className="report-container" style={{justifyContent:'center'}}>
      <div class="report-header">
          <h1 class="recent-Articles">EVENT PROPOSAL</h1>
         
@@ -138,9 +102,22 @@ export const Add=()=>{
         <option value="seminar">Seminar</option>
         <option value="workshop">Workshop</option>
       </select> */}
+       <Form>
+     
 
      <div className="form group">
-     <label >Nature of the event :</label>
+     <Form.Select aria-label="Nature of the event" name="event_name" value={seminar.event_name} onChange={infoCollect} style={{ width: '80%' }}>
+  <option value="">Select Event Nature .......</option>
+  <option value="data_management_workshop">Workshop</option>
+  <option value="data_management_Seminar">Seminar</option>
+  <option value="Conference">Conference</option>
+  <option value="Technical Symposium">Technical Symposium</option>
+  <option value="Guest Lecture">Guest Lecture</option>
+  <option value="FDP">FDP</option>
+</Form.Select>
+
+     {/* <label >Nature of the event :</label>
+
                         <select name="event_name" className="form-select" value={seminar.event_name} onChange={infoCollect}  style={{width:'80%'}}>
                         <option value="">Select Event Nature .......</option>
                         <option value="data_ecr_workshop">Workshop</option>
@@ -149,7 +126,7 @@ export const Add=()=>{
                         <option value="Technical Symposium">Technical Symposium</option>
                         <option value="Guest Lecture">Guest Lecture</option>
                         <option value="FDP">FDP</option>
-                        </select>
+                        </select> */}
                     </div>
                 
             <div className="form group">
@@ -171,7 +148,7 @@ export const Add=()=>{
       <input type="date" name="event_date" value={seminar.event_date} required onChange={infoCollect} /><br />
 
       <label htmlFor="event_venue">Venue:</label>
-      <select name="vevent_venue" value={seminar.event_venue} onChange={infoCollect}>
+      <select name="event_venue" value={seminar.event_venue} onChange={infoCollect}>
         
       <option value="">Select Venue ......</option>
         <option value="Seminar Hall I">Seminar Hall I</option>
@@ -190,8 +167,8 @@ export const Add=()=>{
       <label htmlFor="guest_address">Address:</label>
       <input type="text" name="guest_address" value={seminar.guest_address} required onChange={infoCollect} /><br />
 
-      <label htmlFor="guest_number">Mobile Number:</label>
-      <input type="number" name="guest_number" value={seminar.guest_number} required onChange={infoCollect} /><br />
+      <label htmlFor="guest_phone_number">Mobile Number:</label>
+      <input type="number" name="guest_phone_number" value={seminar.guest_phone_number} required onChange={infoCollect} /><br />
 
       <label htmlFor="guest_email">Mail ids</label>
       <input type="text" name="guest_email" value={seminar.guest_email} required onChange={infoCollect} /><br />
@@ -223,7 +200,7 @@ export const Add=()=>{
       </select><br />
 
       <label>Event Coordinator</label>
-                        <select name="event_coordinator" className="form-select" onChange={infoCollect} value={seminar.event_coordinator}>
+                        <select name="event_coordinator" className="form group" onChange={infoCollect} value={seminar.event_coordinator}>
                         <option value="">Select Faculty</option>
                             {
                                 proposable.map((val,key)=>{
@@ -239,9 +216,13 @@ export const Add=()=>{
         <option value="0">Odd Sem</option>
         <option value="1">Even Sem</option>
       </select><br />
+      
+   
+     
 
       
     </div>
+    </Form>
 
     <h1>{information}</h1>
          
@@ -261,7 +242,7 @@ export const Add=()=>{
         "guest_name":"",
         "guest_designation":"",
         "guest_address":"",
-        "guest_number":0,
+        "guest_phone_number":0,
         "guest_email":"",
         "student_count":0,
         "faculty_count":0,
@@ -272,7 +253,7 @@ export const Add=()=>{
         "event_budget":0,
         "event_coordinator":"",
         
-        "coordinator_phno":0,
+        "":0,
         "coordinator_designation":406,
         "acdyr_id":"",
         "dept_id":0,

@@ -4,7 +4,7 @@ const db = mysql.createConnection({
     "host":"localhost",
     "user":"root",
     "password":"",
-    "database":"mec_project"
+    "database":"mec_report_management"
 })
 
 db.connect(()=>{
