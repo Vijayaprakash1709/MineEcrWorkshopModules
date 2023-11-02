@@ -32,7 +32,7 @@ router.get('/dept/:obj',async(req,res)=>{
 
 router.get('/find/:deptId',async(req,res)=>{
     const dId=req.params.deptId
-    const sql="select faculty_id,faculty_name from data_faculties where faculty_dept=? and not faculty_desig in(403,404)"
+    const sql="select faculty_id,faculty_name from data_faculties where dept_id=? and not faculty_desig in(403,404)"
     base.query(sql,[dId],(err,rows)=>{
         if(err){
             res.status(500).json({error:err.message})

@@ -2,11 +2,109 @@ const express = require("express")
 const route = express.Router()
 const base = require("./db")
 
+
+//////////////Dropdowns/////////////////////
+
+route.get('/dropdownMajorType',async(req,res)=>{
+    let sql="select * from data_major_report_type"
+    base.query(sql,(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        else if(rows.length==0){
+            res.status(201).json({error:"No matches found"})
+            return
+        }
+        res.status(200).json({rows})
+    })
+})
+
+route.get('/dropdownSubTypeWithMajor/:majorId',async(req,res)=>{
+    let sql="select * from data_sub_report_type where major_report_id = ?"
+    base.query(sql,[req.params.majorId],(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        else if(rows.length==0){
+            res.status(201).json({error:"No matches found"})
+            return
+        }
+        res.status(200).json({rows})
+    })
+})
+
+
+route.get('/dropdownDept',async(req,res)=>{
+    let sql="select * from data_dept"
+    base.query(sql,(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        else if(rows.length==0){
+            res.status(201).json({error:"No matches found"})
+            return
+        }
+        res.status(200).json({rows})
+    })
+})
+
+route.get('/dropdownFacultyWithDept/:deptId',async(req,res)=>{
+    let sql="select * from data_faculty where dept_id=?"
+    base.query(sql,[req.params.deptId],(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        else if(rows.length==0){
+            res.status(201).json({error:"No matches found"})
+            return
+        }
+        res.status(200).json({rows})
+    })
+})
+
+route.get('/dropdownVenue',async(req,res)=>{
+    let sql="select * from data_venue"
+    base.query(sql,(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        else if(rows.length==0){
+            res.status(201).json({error:"No matches found"})
+            return
+        }
+        res.status(200).json({rows})
+    })
+})
+
+
+route.get('/currentAcademicYear',async(req,res)=>{
+    let sql="select acd_yr,acd_status from predefined_academic_year where acd_status=1 or acd_status=2"
+    base.query(sql,(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        else if(rows.length==0){
+            res.status(201).json({error:"No matches found"})
+            return
+        }
+        res.status(200).json({rows})
+    })
+})
+
+
+/////////////////////////////////
+
 route.get('/dept/:obj',async(req,res)=>{
     // console.log(req.params.obj)
     let received=req.params.obj.split("-")
     console.log(received)
-    base.query("select * from data_management_workshop where dept_id in(?)",[received],(err,rows)=>{
+    base.query("select * from data_management_seminar where dept_id in(?)",[received],(err,rows)=>{
         if(err){
             res.status(500).json({error:err.message})
             return
@@ -20,10 +118,12 @@ route.get('/dept/:obj',async(req,res)=>{
 
 })
 
-route.get('/find/:deptId',async(req,res)=>{
-    const dId=req.params.deptId
-    const sql=`select faculty_id, faculty_name from data_faculties where faculty_dept=? and not faculty_desig in(403,404)`
-    base.query(sql,[dId],(err,rows)=>{
+route.get('/find',async(req,res)=>{
+    // const dId=req.params.deptId
+    const sql=`select * from data_faculties inner join data_dept on data_faculties.dept_id = data_dept.dept_id where not faculty_desig in(403,404,401,402)`
+//     INNER JOIN data_dept d ON f.dept_id = d.dept_id
+// WHERE f.faculty_desig NOT IN (403, 404);
+    base.query(sql,[],(err,rows)=>{
         if(err){
             res.status(500).json({error:err.message})
             return

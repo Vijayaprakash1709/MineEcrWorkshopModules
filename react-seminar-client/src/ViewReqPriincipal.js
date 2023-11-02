@@ -16,10 +16,17 @@ export const ViewReqPrincipal=()=>{
       
     // }
     const loadSeminars=async()=>{
+        try{
         const logged=JSON.parse(sessionStorage.getItem("person"))
-        const temp = await callLoadForLevel2()
-        // alert(temp.row)
-        setEcrs(temp.row)
+        const temp = await callLoadForLevel2(logged.faculty_id)
+        setEcrs(temp.rows)
+        }
+        catch(error){
+            alert("No request")
+        }
+        // if(temp.error=="No matches"){
+        //     alert("No request")
+        // }
     }
 
     useEffect(()=>{
@@ -29,7 +36,7 @@ export const ViewReqPrincipal=()=>{
 
     // const acceptAll=async()=>{
     //     const logged=JSON.parse(sessionStorage.getItem("person"))
-    //     const temp = await approveLevel1(logged.faculty_dept,logged.faculty_id)
+    //     const temp = await approveLevel1(logged.dept_id,logged.faculty_id)
     //     setInfo(temp)
     // }
 
@@ -44,7 +51,7 @@ export const ViewReqPrincipal=()=>{
 <div className="main">
     
 
-      <div className="report-container">
+      <div className="report-container1">
         <div className="report-header">
           <h1 className="recent-Articles">Requests</h1>
         </div>
@@ -54,7 +61,8 @@ export const ViewReqPrincipal=()=>{
         <table className="table table-stripped text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>ECR No</th><th>ECR Type</th><th>Title</th><th>Co-ordinator</th>
+                                        <th>Report ID</th><th>Title</th><th>Major Type</th><th>Sub Type</th>
+                                        <th>Event Date</th><th>Co ordinator</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -63,19 +71,38 @@ export const ViewReqPrincipal=()=>{
                                    
                                         ecrs.map((val,key)=>(
                                             <tr>
-                                                <td>{val.sno}</td>
-                                                <td>{val.event_name}</td>
+                                                <td>{val.report_id}</td>
                                                 <td>{val.event_title}</td>
+                                                <td>ECR</td>
+                                                <td>{val.event_name}</td>
+                                                <td>{val.event_date.split('-').reverse().join('-')}</td>
                                                 <td>{val.event_coordinator}</td>
                                                 <td className="row justify-content-evenly">
+                                                    {/* {
+                                                        alert(info)
+                                                    } */}
                                                 <button type="button" onClick={async()=>{
+                                                    
                                                         // alert(val.workshop_id+" "+val.dept_id)
-                                                        const temp=await callAcceptLevel2(val.dept_id,val.sno)
+                                                        try{
+                                                        const logged=JSON.parse(sessionStorage.getItem("person"))
+                                                        const temp=await callAcceptLevel2(val.dept_id,logged.faculty_id,val.report_id)
                                                         setInfo(temp)
-                                                        if(info===400){
+                                                        }
+                                                       
+                                                        catch(error){
+                                                            alert("No data Found");
+                                                        }
+                                                       
+                                                        if(info==='error'){
                                                             <h1>No request found</h1>
                                                         }
+                                                        try{
                                                         window.location.assign("/")
+                                                        }
+                                                        catch(error){
+                                                            console.log(error);
+                                                        }
                                                         
                                                     }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>

@@ -7,10 +7,10 @@ export const onLogin=async(obj)=>{
     return returned.data
 }
 
-export const onProposalsLoad=async(dept_id)=>{
+export const onProposalsLoad=async()=>{
     
     // alert(dept_id)
-    const returned=await axios.get(`${url}/seminar/find/${dept_id}`)
+    const returned=await axios.get(`${url}/seminar/find`)
     let ids=[]
         returned.data.rows.map((v)=>{
             ids.push(v)
@@ -28,13 +28,13 @@ export const onPropose=async(obj)=>{
 
 export const loadForLevel1=async(dept,emp)=>{
     // alert(dept)
-    const receive = await axios.get(`${url}/seminar/loadForLevel1/${dept}/${emp}`)
+    const receive = await axios.get(`${url}/seminar/loadForLevel1/data_management_seminar/${dept}/${emp}`)
     return receive.data.rows
 
 }
 
-export const approveLevel1=async(dept,emp,sno)=>{
-    const receive = await axios.put(`${url}/seminar/acknowledgelevel1/${dept}/${emp}/${sno}`)
+export const approveLevel1=async(dept,emp,report_id)=>{
+    const receive = await axios.put(`${url}/seminar/acknowledgelevel1/data_management_seminar/${dept}/${emp}/${report_id}`)
     return receive.data
 }
 export const Table=async()=>
@@ -46,15 +46,67 @@ export const Table=async()=>
     return temp;
 }
 
-export const callLoadForLevel2=async()=>{
-    // alert("axios called")
-    const receive = await axios.get(`${url}/seminar/loadforlevel2`);
-    // alert(receive.data.row)
-    return receive.data
+export const callLoadForLevel2=async(empid)=>{
+    // alert(empid)
+    const deptid = 1;
+//     const receive = await axios.get(`${url}/seminar/loadforlevel2/data_management_seminar/${deptid}/${empid}`);
+  
+//     return receive.data
+    
+// }
+
+try {
+    const response = await axios.get(`${url}/seminar/loadforlevel2/data_management_seminar/${deptid}/${empid}`);
+    return response.data;
+  } catch (error) {
+ console.log("No request found")
+  }
+}
+
+
+export const callAcceptLevel2=async(dept,empid,report_id)=>{
+    try{
+    const response=await axios.put(`${url}/seminar/acknowledgelevel2/data_management_seminar/${dept}/${empid}/${report_id}`)
+    return response.data
+    }
+    catch (error){
+        alert("Accept Error")
+    }
+}
+export const Venue=async()=>{
+    const res=await axios.get(`${url}/seminar/dropdownVenue`)
+    let ids=[]
+    res.data.rows.map((v)=>{
+        ids.push(v)
+    })
+    return ids
     
 }
 
-export const callAcceptLevel2=async(dept,sno)=>{
-    const response=await axios.put(`${url}/seminar/acknowedgelevel2/${dept}/${sno}`)
-    return response.data
+export const Major=async()=>{
+    const re=await axios.get(`${url}/seminar/dropdownMajorType`)
+    let ids=[]
+    re.data.rows.map((v)=>{
+        ids.push(v)
+    })
+    return ids
+    
+}
+export const SubReport=async(mid)=>{
+    const re=await axios.get(`${url}/seminar/dropdownSubTypeWithMajor/${mid}`)
+    let ids=[]
+    re.data.rows.map((v)=>{
+        ids.push(v)
+    })
+    return ids
+    
+}
+export const Academic=async()=>{
+    const re=await axios.get(`${url}/seminar/currentAcademicYear`)
+    let ids=[]
+    re.data.rows.map((v)=>{
+        ids.push(v)
+    })
+    return ids
+    
 }

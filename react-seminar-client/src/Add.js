@@ -1,20 +1,96 @@
 // import { Container, Nav, Navbar } from "react-bootstrap";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./sty.css";
-import { onProposalsLoad, onPropose } from "./connect"
+import { onProposalsLoad, onPropose,Venue,Major,SubReport,Academic} from "./connect"
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Multiselect from 'multiselect-react-dropdown';
+import Select from 'react-select';
+import axios from "axios";
+
+// import Button from 'react-bootstrap/Button';
+
+
 
 export const Add=()=>{
 
-        // const [eventType, setEventType] = useState('seminar');
+
+
+    const options = [
+        {
+          value: 0,
+          label: 'Angular',
+        },
+        {
+          value: 1,
+          label: 'Bootstrap',
+          isDisabled: true,
+        },
+        {
+          value: 2,
+          label: 'React.js',
+        },
+        {
+          value: 3,
+          label: 'Vue.js',
+        },
+        {
+          label: 'backend',
+          options: [
+            {
+              value: 4,
+              label: 'Django',
+            },
+            {
+              value: 5,
+              label: 'Laravel',
+            },
+            {
+              value: 6,
+              label: 'Node.js',
+            },
+          ],
+        },
+      ];
+
+      const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleChange = (selected) => {
+    setSelectedOptions(selected);
+  };
+    // 
+    // const [selectedOptions, setSelectedOptions] = useState([]);
+    // const [options, setOptions] = useState([]);
   
+    // useEffect(() => {
      
-    
+    //   axios.get('localhost:1234/seminar/find')
+    //     .then((response) => {
+          
+    //       setOptions(response);
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error fetching options:', error);
+    //     });
+    // }, []);
+  
+    // const handleChange = (selected) => {
+    //   setSelectedOptions(selected);
+    // };
+
+
+        // const [eventType, setEventType] = useState('seminar');
+        // const [selectedOptions, setSelectedOptions] = useState([]);
+
+        // const handleChange = (selected) => {
+        //   setSelectedOptions(selected);
+        // };
+  
+        const logged=JSON.parse(sessionStorage.getItem("person"))
+      
     const[information,setInformation]=useState("")
 
     const[seminar,setSeminar]=useState({
-        
+        "major_id":0,
         "report_id":"",
         "event_name":"",
         "event_title":"",
@@ -37,36 +113,91 @@ export const Add=()=>{
         "coordinator_designation":0,
         "event_date_from":"0000-00-00",
         "event_date_to":"0000-00-00",
-        "acdyr_id":0,
-        "dept_id":0,
+        "acdyr_id":1,
+        "dept_id":1,
         "sem_id":0
         
     })
-    console.log(seminar);
+    // console.log(seminar);
 
     const[proposable,setProposable]=useState([])
+    const[venue,setVenue]=useState([])
 
-    const fillPorposals=async(dept_id)=>{
-        const temp = await onProposalsLoad(dept_id)
+    const fillPorposals=async()=>{
+        const temp = await onProposalsLoad()
         setProposable(temp)
     }
+
+    
+    useEffect(()=>{
+        Ven();
+        Maj();
+        fillPorposals()
+        Acad();
+    })
+    const[major,setMajor]=useState([])
+        
+        const Ven=async()=>{
+            const t = await Venue()
+            setVenue(t)
+            // alert(t)
+        }
+    const[year,setYear]=useState([])
+        const Acad=async()=>{
+            const t = await Academic()
+            setYear(t)
+            // alert(t)
+        }
+        const Maj=async()=>{
+            const t = await Major()
+            setMajor(t)
+            // alert(t)
+        }
+        const[sub,setSub]=useState([])
+        const Sub=async(mid)=>{
+            const t = await SubReport(mid)
+            setSub(t)
+            // alert(t)
+        }
+        // let i=0;
+        // i=i+1
+        // if(i==1){
+        //     Maj();
+        //     i=i+1
+        // }
+    // Maj();
+    
+    
+  
+    
 
     const infoCollect=(eve)=>{
         const{name,value}=eve.target
         setSeminar((old)=>{
-            if(name==="event_name"||name==="event_title"||name==="event_organizer"||name==="event_sponsor"||name==="event_date"||name==="event_venue"||name==="guest_name"||name==="guest_designation"||name==="guest_address"||name==="guest_email"||name==="proposal_date"||name==="event_coordinator"||name==="acdyr_id"){
+            if(name==="event_name"||name==="event_title"||name==="event_venue"||name==="event_organizer"||name==="event_sponsor"||name==="guest_name"||name==="guest_designation"||name==="guest_address"||name==="guest_email"||name==="proposal_date"||name==="event_coordinator"||name==="acdyr_id"){
+                
                 return{
                     ...old,
                     [name]:value
                 }
             }
-            else if(name==="dept_id"){
-                fillPorposals(value)
+            else if(name==="major_id"){
+                Sub(value)
                 return{
                     ...old,
                     [name]:parseInt(value)
                 }
             }
+            else if(name==="event_date"){
+                // Maj()
+               
+            // Ven()
+                return{
+                    ...old,
+                    [name]:value
+                }
+            }
+          
             else{
                 return{
                     ...old,
@@ -78,6 +209,9 @@ export const Add=()=>{
 
     const callPropose=async()=>{
         const temp = await onPropose(seminar)
+        if(temp.message===404||temp.message===500){
+            alert("Error in entering data")
+        }
         setInformation(temp.message)
     }
 
@@ -103,18 +237,59 @@ export const Add=()=>{
         <option value="workshop">Workshop</option>
       </select> */}
        <Form>
+   
      
 
      <div className="form group">
-     <Form.Select aria-label="Nature of the event" name="event_name" value={seminar.event_name} onChange={infoCollect} style={{ width: '80%' }}>
+
+
+     <Select
+        isMulti
+        options={options}
+        value={selectedOptions}
+        onChange={handleChange}
+        isSearchable
+        placeholder="Select options..."
+        closeMenuOnSelect={false} 
+      />
+
+     {/* <Select
+        isMulti
+        options={options}
+        value={selectedOptions}
+        onChange={handleChange}
+        isSearchable
+        placeholder="Select options..."
+        closeMenuOnSelect={false}
+      /> */}
+     {/* <select name="cars" id="cars" multiple multiselect-hide-x="true">
+  <option value="1">Audi</option>
+  <option selected value="2">BMW</option>
+  <option selected value="3">Mercedes</option>
+  <option value="4">Volvo</option>
+  <option value="5">Lexus</option>
+  <option value="6">Tesla</option>
+</select> */}
+
+     <label for="major_id">Major Type :</label>
+     <select name="major_id" value={seminar.major_id} onChange={infoCollect}>
+  <option value="">Select Major Type .......</option>
+  {
+                                major.map((val,key)=>{
+                                    return (<option key={val.major_report_id} value={val.major_report_id}>{val.major_report}</option>)
+                                })
+                            }
+</select>
+<label for="event_name">Sub Type :</label>
+<select name="event_name" value={seminar.event_name} onChange={infoCollect}>
   <option value="">Select Event Nature .......</option>
-  <option value="data_management_workshop">Workshop</option>
-  <option value="data_management_Seminar">Seminar</option>
-  <option value="Conference">Conference</option>
-  <option value="Technical Symposium">Technical Symposium</option>
-  <option value="Guest Lecture">Guest Lecture</option>
-  <option value="FDP">FDP</option>
-</Form.Select>
+  {
+                                sub.map((val,key)=>{
+                                    return (<option key={val.sub_report_id} value={`data_management_${val.sub_report}`}>{val.sub_report}</option>)
+                                })
+                            }
+</select>
+
 
      {/* <label >Nature of the event :</label>
 
@@ -140,8 +315,12 @@ export const Add=()=>{
                     </div>
 
                     <div className="form group">
-      <label htmlFor="event_sponsor">Colloborating/Sponsored Agency:</label>
-      <input type="text" name="event_sponsor" value={seminar.event_sponsor} required onChange={infoCollect}placeholder="Event Sponsor" className="form-control" /><br />
+      <label htmlFor="event_sponsor">Colloborating/Sponsored Agency 1:</label>
+      <input type="text" name="event_sponsor" value={seminar.major_id} required onChange={infoCollect}placeholder="Event Sponsor" className="form-control" /><br />
+      </div>
+      <div className="form group">
+      <label htmlFor="event_sponsor">Colloborating/Sponsored Agency 2:</label>
+      <input type="text" name="event_sponsor1"  placeholder="Event Sponsor" className="form-control" /><br />
       </div>
       <div className="form group">
       <label htmlFor="event_date">Date of The Event Planned:</label>
@@ -151,10 +330,11 @@ export const Add=()=>{
       <select name="event_venue" value={seminar.event_venue} onChange={infoCollect}>
         
       <option value="">Select Venue ......</option>
-        <option value="Seminar Hall I">Seminar Hall I</option>
-        <option value="Seminar Hall II">Seminar Hall II</option>
-        <option value="Cloud Computing Lab">Cloud Computing Lab</option>
-        <option value="Data Analytics Lab">Data Analytics Lab</option>
+      {
+                                venue.map((val,key)=>{
+                                    return (<option value={val.venue_name}>{val.venue_name}</option>)
+                                })
+                            }
       </select><br />
 
       <h1>Details of The Guest</h1>
@@ -188,7 +368,7 @@ export const Add=()=>{
 
       <h1>Co-ordinator of the Event</h1>
 
-      <label htmlFor="dept_id">Department:</label>
+      {/* <label htmlFor="dept_id">Department:</label>
       <select name="dept_id" value={seminar.dept_id} onChange={infoCollect}>
       <option value="">Select Department ......</option>
         <option value="1">CSE</option>
@@ -197,19 +377,27 @@ export const Add=()=>{
         <option value="4">IT</option>
         <option value="5">CY</option>
         <option value="6">AIDS</option>
-      </select><br />
+      </select><br /> */}
 
       <label>Event Coordinator</label>
                         <select name="event_coordinator" className="form group" onChange={infoCollect} value={seminar.event_coordinator}>
                         <option value="">Select Faculty</option>
                             {
                                 proposable.map((val,key)=>{
-                                    return (<option value={val.faculty_id}>{val.faculty_name}</option>)
+                                    return (<option value={val.faculty_id}>{val.faculty_id}{'-'}{val.faculty_name}{'-'}{val.dept}</option>)
                                 })
                             }
                         </select>
       <label htmlFor="acdyr_id">Academic Year:</label>
-      <input type="text" name="acdyr_id" value={seminar.acdyr_id} required onChange={infoCollect} /><br />
+      <select name="acdyr_id" className="form group" onChange={infoCollect} value={seminar.acad_yr_id}>
+                        <option value="">Select Academic Year</option>
+                            {
+                                year.map((val,key)=>{
+                                   
+                                    return (<option value={val.acd_yr_id}>{val.acd_yr}</option>)
+                                })
+                            }
+                        </select>
 
       <label htmlFor="sem">Semester :</label>
       <select name="sem" value={seminar.sem} onChange={infoCollect}>
@@ -224,10 +412,10 @@ export const Add=()=>{
     </div>
     </Form>
 
-    <h1>{information}</h1>
+    <h1 style={{color:'red',}}>{information}</h1>
          
     <div className='row mt-5 justify-content-around'>
-        <input type='button' onClick={callPropose} value="Propose" className='col-3 btn btn-primary' />
+        <input type='button' onClick={callPropose} value="Call Proposal" className='col-3 btn btn-primary' />
                         <input type='button' onClick={()=>{
                             setSeminar(()=>{
                                 return{

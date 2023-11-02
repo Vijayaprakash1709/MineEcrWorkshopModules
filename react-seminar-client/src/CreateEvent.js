@@ -65,8 +65,10 @@ export const CreateEvent=()=>{
                             <th>ID</th>
                             <th>Event Title</th>
                             <th>Date</th>
-                            <th></th>
-                            <th></th>
+                            <th>Major Type</th>
+                            <th>Sub Type</th>
+                            
+                            {/* <th></th> */}
                             <th>
 
                             </th>
@@ -74,59 +76,64 @@ export const CreateEvent=()=>{
                             <th>
 
                             </th>
-                            <th></th><th>Completion</th><th></th>
+                            <th></th><th>Completion</th><th></th><th>Details</th>
                             </tr>
                             <tr><th></th><th></th><th></th> <th></th><th></th><th>Submitted on</th><th>Hod</th><th>Principal</th><th>Submitted on</th><th>Hod</th><th>Principal</th><th></th>
                         </tr>
+                        
                     </thead>
                     <tbody>
                         {
                             allvalues.map((data)=>
                             (
                                 <tr>
-                                    <td>{data.sno}</td>
+                                    <td>{data.report_id}</td>
                                     <td>{data.event_title}</td>
-                                    <td>{data.event_date}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        {data.proposal_date}
-                                    </td>
+                                    <td>{data.event_date.split('-').reverse().join('-')}</td>
+                                    <td>ECR</td>
+                                    <td>{(data.event_name)}</td>
+                                    
+                                    <td>{data.event_date.split('-').reverse().join('-')}</td>
+                                   
+                                  
                                     {
-                                (data.approval_status===0) ?
+                                (data.report_proposal_status===0) ?
                                 <>
                
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         <td></td>
+                                        {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         </>
                                         :
-                                        (data.approval_status===1) ? 
+                                        (data.report_proposal_status===1) ? 
                                         <>
                                         
                                         <td><h3 style={{color:'green'}}>Accepted</h3></td>
                                         <td>🕒Pending</td>
                                         <td></td>
+                                        {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         </>
                                         :
-                                        (data.approval_status===2) ?
+                                        (data.report_proposal_status===2) ?
                                         <>
                                         <td><h3 style={{color:'green'}}>Accepted</h3></td>
                                         <td><h3 style={{color:'green'}}>Accepted</h3></td>
                                         <td></td>
+                                        {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         </>
                                         :
-                                        (data.approval_status===-1) ?
+                                        (data.report_proposal_status===-1) ?
                                         <>
                                            <td><h3 style={{color:'red'}}>Rejected</h3></td>
                                         <td>-</td>
-                                        <td></td>
+                                        <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
 

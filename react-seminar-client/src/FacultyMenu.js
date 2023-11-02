@@ -12,6 +12,7 @@ export const FacultyMenu=()=>{
              alt="menu-icon"/> 
  
  <div class="logosec">
+ {/* <a className="demo" href="/generate-pdf"><h1>test</h1></a> */}
   
          <div class="logo"> 
          Name : {
