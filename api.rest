@@ -148,4 +148,4 @@ GET http://localhost:1234/ecrWorkshop/completionloadlevel2/1
 PUT http://localhost:1234/ecrWorkshop/completionacknowledgelevel2/1/RPT0000001
 
 
-GET http://localhost:1234/seminar/find/1
+GET http://localhost:1234/seminar/find

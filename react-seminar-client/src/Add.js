@@ -3,87 +3,92 @@ import { useEffect, useState } from "react"
 import "./sty.css";
 import { onProposalsLoad, onPropose,Venue,Major,SubReport,Academic} from "./connect"
 import Form from 'react-bootstrap/Form';
-import Multiselect from 'multiselect-react-dropdown';
+// import Multiselect from 'multiselect-react-dropdown';
 import Select from 'react-select';
 import axios from "axios";
+// import { CMultiSelect } from "@core5ui/react";
 
+// import { CMultiSelect } from "@coreui/coreui/dist/css/coreui.min.css";
 // import Button from 'react-bootstrap/Button';
-
+// import '@coreui/coreui/dist/css/coreui.min.css'
 
 
 export const Add=()=>{
 
 
 
-    const options = [
-        {
-          value: 0,
-          label: 'Angular',
-        },
-        {
-          value: 1,
-          label: 'Bootstrap',
-          isDisabled: true,
-        },
-        {
-          value: 2,
-          label: 'React.js',
-        },
-        {
-          value: 3,
-          label: 'Vue.js',
-        },
-        {
-          label: 'backend',
-          options: [
-            {
-              value: 4,
-              label: 'Django',
-            },
-            {
-              value: 5,
-              label: 'Laravel',
-            },
-            {
-              value: 6,
-              label: 'Node.js',
-            },
-          ],
-        },
-      ];
+//     const options = [
+//         {
+//           value: 0,
+//           label: 'Angular',
+//         },
+//         {
+//           value: 1,
+//           label: 'Bootstrap',
+//           isDisabled: true,
+//         },
+//         {
+//           value: 2,
+//           label: 'React.js',
+//         },
+//         {
+//           value: 3,
+//           label: 'Vue.js',
+//         },
+//         {
+//           label: 'backend',
+//           options: [
+//             {
+//               value: 4,
+//               label: 'Django',
+//             },
+//             {
+//               value: 5,
+//               label: 'Laravel',
+//             },
+//             {
+//               value: 6,
+//               label: 'Node.js',
+//             },
+//           ],
+//         },
+//       ];
 
-      const [selectedOptions, setSelectedOptions] = useState([]);
+//       const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const handleChange = (selected) => {
-    setSelectedOptions(selected);
-  };
-    // 
-    // const [selectedOptions, setSelectedOptions] = useState([]);
-    // const [options, setOptions] = useState([]);
+//   const handleChange = (selected) => {
+//     setSelectedOptions(selected);
+//   };
+    
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [option, setOptions] = useState([]);
+    console.log(option)
   
-    // useEffect(() => {
+    useEffect(() => {
+        Ven();
+        Maj();
+        fillPorposals()
+        Acad();
      
-    //   axios.get('localhost:1234/seminar/find')
-    //     .then((response) => {
-          
-    //       setOptions(response);
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error fetching options:', error);
-    //     });
-    // }, []);
+      axios.get('http://localhost:1234/seminar/find')
+        .then((response) => {
+        //   console.log(response);
+          setOptions(response.data.rows);
+        })
+        .catch((error) => {
+          console.error('Error fetching options:', error);
+        });
+        
+    
+    }, []);
   
-    // const handleChange = (selected) => {
-    //   setSelectedOptions(selected);
-    // };
+  
 
-
-        // const [eventType, setEventType] = useState('seminar');
-        // const [selectedOptions, setSelectedOptions] = useState([]);
-
-        // const handleChange = (selected) => {
-        //   setSelectedOptions(selected);
-        // };
+    const options = option.map((val, key) => ({
+        value: val.faculty_id,
+        label: val.faculty_id+'-'+val.faculty_name+'-'+val.dept,
+      }));
+    // console.log(facultySelect);
   
         const logged=JSON.parse(sessionStorage.getItem("person"))
       
@@ -129,12 +134,9 @@ export const Add=()=>{
     }
 
     
-    useEffect(()=>{
-        Ven();
-        Maj();
-        fillPorposals()
-        Acad();
-    })
+    // useEffect(()=>{
+        
+    // })
     const[major,setMajor]=useState([])
         
         const Ven=async()=>{
@@ -167,14 +169,37 @@ export const Add=()=>{
         // }
     // Maj();
     
+    const handleChange = (eve) => {
+        // alert("called")
+      setSelectedOptions(eve);
     
+      if(eve.target){
+      const{name,value}=eve.target
   
+      
+        setSeminar((old)=>{
+            
+            if(name==="event_coordinator"){
+                alert("called")
+                return{
+                    ...old,
+                    [name]:value
+                }
+            }
+        }
+        )}
+        else{
+            alert(eve.target)
+        }
+    
+    }
+  console.log(selectedOptions)
     
 
     const infoCollect=(eve)=>{
         const{name,value}=eve.target
         setSeminar((old)=>{
-            if(name==="event_name"||name==="event_title"||name==="event_venue"||name==="event_organizer"||name==="event_sponsor"||name==="guest_name"||name==="guest_designation"||name==="guest_address"||name==="guest_email"||name==="proposal_date"||name==="event_coordinator"||name==="acdyr_id"){
+            if(name==="event_name"||name==="event_title"||name==="event_venue"||name==="event_organizer"||name==="event_sponsor"||name==="guest_name"||name==="guest_designation"||name==="guest_address"||name==="guest_email"||name==="proposal_date"||name==="acdyr_id"){
                 
                 return{
                     ...old,
@@ -186,6 +211,13 @@ export const Add=()=>{
                 return{
                     ...old,
                     [name]:parseInt(value)
+                }
+            }
+            else if(name==="event_coordinator"){
+                alert("called")
+                return{
+                    ...old,
+                    [name]:value
                 }
             }
             else if(name==="event_date"){
@@ -206,6 +238,7 @@ export const Add=()=>{
             }
         })
     }
+    console.log(seminar)
 
     const callPropose=async()=>{
         const temp = await onPropose(seminar)
@@ -243,16 +276,6 @@ export const Add=()=>{
      <div className="form group">
 
 
-     <Select
-        isMulti
-        options={options}
-        value={selectedOptions}
-        onChange={handleChange}
-        isSearchable
-        placeholder="Select options..."
-        closeMenuOnSelect={false} 
-      />
-
      {/* <Select
         isMulti
         options={options}
@@ -260,8 +283,11 @@ export const Add=()=>{
         onChange={handleChange}
         isSearchable
         placeholder="Select options..."
-        closeMenuOnSelect={false}
+        closeMenuOnSelect={false} 
       /> */}
+
+    
+      {/* <CMultiSelect allowCreateOptions options={facultySelect} /> */}
      {/* <select name="cars" id="cars" multiple multiselect-hide-x="true">
   <option value="1">Audi</option>
   <option selected value="2">BMW</option>
@@ -379,15 +405,28 @@ export const Add=()=>{
         <option value="6">AIDS</option>
       </select><br /> */}
 
-      <label>Event Coordinator</label>
-                        <select name="event_coordinator" className="form group" onChange={infoCollect} value={seminar.event_coordinator}>
+      {/* <label>Event Coordinator</label>
+                        <select name="event_coordinator" className="form group" onChange={handleChange} value={selectedOptions}>
                         <option value="">Select Faculty</option>
                             {
                                 proposable.map((val,key)=>{
                                     return (<option value={val.faculty_id}>{val.faculty_id}{'-'}{val.faculty_name}{'-'}{val.dept}</option>)
                                 })
                             }
-                        </select>
+                        </select> */}
+ <Select
+        isMulti
+
+        name="event_coordinator"
+        options={options}
+        value={selectedOptions}
+        onChange={handleChange}
+        isSearchable
+        placeholder="Select options..."
+        closeMenuOnSelect={false}
+      />
+
+        
       <label htmlFor="acdyr_id">Academic Year:</label>
       <select name="acdyr_id" className="form group" onChange={infoCollect} value={seminar.acad_yr_id}>
                         <option value="">Select Academic Year</option>
