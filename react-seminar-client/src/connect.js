@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url="http://localhost:1234"
+const url="http://192.168.214.14:1234"
 
 export const onLogin=async(obj)=>{
     const returned = await axios.post(`${url}/login`,obj)
@@ -21,8 +21,13 @@ export const onProposalsLoad=async()=>{
 
 export const onPropose=async(obj)=>{
     // alert(JSON.stringify(obj))
+    try{
     const returned = await axios.post(`${url}/seminar/ecrProposal/${obj.event_name}`,obj)
     return returned.data
+    }
+    catch(error){
+        alert("Please fill all fields")
+    }
 }
 
 
@@ -40,8 +45,8 @@ export const approveLevel1=async(dept,emp,report_id)=>{
 export const Table=async()=>
 {
      // alert("axios called")
-    const url="http://localhost:1234/seminar/dept/1";  
-    const temp=await axios.get(`${url}`);
+    // const url=`${url}/seminar/dept/1`;  
+    const temp=await axios.get(`${url}/seminar/dept/1`);
     // console.log(temp.data)
     return temp;
 }
@@ -49,11 +54,7 @@ export const Table=async()=>
 export const callLoadForLevel2=async(empid)=>{
     // alert(empid)
     const deptid = 1;
-//     const receive = await axios.get(`${url}/seminar/loadforlevel2/data_management_seminar/${deptid}/${empid}`);
-  
-//     return receive.data
-    
-// }
+
 
 try {
     const response = await axios.get(`${url}/seminar/loadforlevel2/data_management_seminar/${deptid}/${empid}`);

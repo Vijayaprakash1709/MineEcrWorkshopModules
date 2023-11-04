@@ -3,66 +3,19 @@ import { useEffect, useState } from "react"
 import "./sty.css";
 import { onProposalsLoad, onPropose,Venue,Major,SubReport,Academic} from "./connect"
 import Form from 'react-bootstrap/Form';
-// import Multiselect from 'multiselect-react-dropdown';
+import { format } from 'date-fns';
 import Select from 'react-select';
 import axios from "axios";
-// import { CMultiSelect } from "@core5ui/react";
 
-// import { CMultiSelect } from "@coreui/coreui/dist/css/coreui.min.css";
-// import Button from 'react-bootstrap/Button';
-// import '@coreui/coreui/dist/css/coreui.min.css'
 
 
 export const Add=()=>{
 
 
 
-//     const options = [
-//         {
-//           value: 0,
-//           label: 'Angular',
-//         },
-//         {
-//           value: 1,
-//           label: 'Bootstrap',
-//           isDisabled: true,
-//         },
-//         {
-//           value: 2,
-//           label: 'React.js',
-//         },
-//         {
-//           value: 3,
-//           label: 'Vue.js',
-//         },
-//         {
-//           label: 'backend',
-//           options: [
-//             {
-//               value: 4,
-//               label: 'Django',
-//             },
-//             {
-//               value: 5,
-//               label: 'Laravel',
-//             },
-//             {
-//               value: 6,
-//               label: 'Node.js',
-//             },
-//           ],
-//         },
-//       ];
-
-//       const [selectedOptions, setSelectedOptions] = useState([]);
-
-//   const handleChange = (selected) => {
-//     setSelectedOptions(selected);
-//   };
-    
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [option, setOptions] = useState([]);
-    console.log(option)
+    // console.log(option)
   
     useEffect(() => {
         Ven();
@@ -70,7 +23,7 @@ export const Add=()=>{
         fillPorposals()
         Acad();
      
-      axios.get('http://localhost:1234/seminar/find')
+      axios.get('http://192.168.214.14:1234/seminar/find')
         .then((response) => {
         //   console.log(response);
           setOptions(response.data.rows);
@@ -85,7 +38,7 @@ export const Add=()=>{
   
 
     const options = option.map((val, key) => ({
-        value: val.faculty_id,
+        value: val.faculty_name,
         label: val.faculty_id+'-'+val.faculty_name+'-'+val.dept,
       }));
     // console.log(facultySelect);
@@ -118,6 +71,8 @@ export const Add=()=>{
         "coordinator_designation":0,
         "event_date_from":"0000-00-00",
         "event_date_to":"0000-00-00",
+        "proposal_date":"",
+        "completion_date":"",
         "acdyr_id":1,
         "dept_id":1,
         "sem_id":0
@@ -161,39 +116,102 @@ export const Add=()=>{
             setSub(t)
             // alert(t)
         }
-        // let i=0;
-        // i=i+1
-        // if(i==1){
-        //     Maj();
-        //     i=i+1
-        // }
-    // Maj();
-    
-    const handleChange = (eve) => {
-        // alert("called")
-      setSelectedOptions(eve);
-    
-      if(eve.target){
-      const{name,value}=eve.target
-  
       
-        setSeminar((old)=>{
-            
-            if(name==="event_coordinator"){
-                alert("called")
-                return{
-                    ...old,
-                    [name]:value
-                }
+
+    const[facid,setFacid]=useState([])
+
+
+
+
+
+    // const handleChange = (eve) => {
+    //     let updatedFacidString = facid; // Initialize the string with the current facid value
+      
+    //     for (var i = 0; i < eve.length; i++) {
+    //       var found = false;
+      
+    //       for (var j = 0; j < updatedFacidString.length; j++) {
+    //         if (eve[i].value === updatedFacidString[j]) {
+    //           found = true;
+    //           break;
+    //         }
+    //       }
+      
+    //       if (!found) {
+    //         if (updatedFacidString) {
+    //           updatedFacidString += ','; // Add a comma as a separator
+    //         }
+    //         updatedFacidString += eve[i].value;
+    //         alert("setFacid works");
+    //       }
+    //     }
+      
+    //     setFacid(updatedFacidString);   
+    //     setSelectedOptions(eve);
+      
+    //     setSeminar((old) => {
+
+    //       return {
+    //         ...old,
+    //         event_coordinator: updatedFacidString
+    //       };
+    //     });
+    //   }
+      
+      
+
+
+    const handleChange = (eve) => {
+        let updatedFacidString = facid;
+        for (var i = 0; i < eve.length; i++) {
+          const valueToAdd = eve[i].value;
+      
+          if (!updatedFacidString.includes(valueToAdd)) {
+            if (updatedFacidString && updatedFacidString.length>0) {
+
+              updatedFacidString += ','; // Add a comma as a separator
             }
+            updatedFacidString += valueToAdd;
+            // alert("setFacid works");
+          }
         }
-        )}
-        else{
-            alert(eve.target)
-        }
+        setFacid(updatedFacidString);
+        setSelectedOptions(eve);
+      
+        setSeminar((old) => {
+          return {
+            ...old,
+            event_coordinator: updatedFacidString
+          }
+        })
+        setSeminar((old) => {
+            return {
+              ...old,
+              coordinator_emp_id: logged.faculty_id
+            }
+          })
+          setSeminar((old) => {
+            return {
+              ...old,
+              dept_id: logged.dept_id
+            }
+          })
+          setSeminar((old) => {
+            const date = new Date(); // Replace with your actual date value
+            const currentDate = format(date, 'dd-MM-yyyy');
+            return {
+              ...old,
+              proposal_date: currentDate
+            }
+          })
+      }
     
-    }
-  console.log(selectedOptions)
+  console.log(seminar)
+  
+
+ 
+    
+//   console.log(selectedOptions)
     
 
     const infoCollect=(eve)=>{
@@ -214,7 +232,7 @@ export const Add=()=>{
                 }
             }
             else if(name==="event_coordinator"){
-                alert("called")
+                // alert("called")
                 return{
                     ...old,
                     [name]:value
@@ -238,7 +256,7 @@ export const Add=()=>{
             }
         })
     }
-    console.log(seminar)
+    // console.log(seminar)
 
     const callPropose=async()=>{
         const temp = await onPropose(seminar)
@@ -413,8 +431,12 @@ export const Add=()=>{
                                     return (<option value={val.faculty_id}>{val.faculty_id}{'-'}{val.faculty_name}{'-'}{val.dept}</option>)
                                 })
                             }
-                        </select> */}
+        
+        </select> */}
+
+<label for="event_coordinator">Event Co-ordinator : </label>
  <Select
+ className="form group"
         isMulti
 
         name="event_coordinator"
@@ -479,8 +501,6 @@ export const Add=()=>{
         "proposal_principal":"",
         "event_budget":0,
         "event_coordinator":"",
-        
-        "":0,
         "coordinator_designation":406,
         "acdyr_id":"",
         "dept_id":0,

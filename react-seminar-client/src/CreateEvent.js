@@ -93,7 +93,7 @@ export const CreateEvent=()=>{
                                     <td>ECR</td>
                                     <td>{(data.event_name)}</td>
                                     
-                                    <td>{data.event_date.split('-').reverse().join('-')}</td>
+                                    <td>{data.proposal_date.split('-').reverse().join('-')}</td>
                                    
                                   
                                     {
