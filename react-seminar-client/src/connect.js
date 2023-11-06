@@ -1,10 +1,14 @@
 import axios from 'axios'
 
-const url="http://192.168.214.14:1234"
+const url="http://localhost:1234"
 
 export const onLogin=async(obj)=>{
-    const returned = await axios.post(`${url}/login`,obj)
+   try{ const returned = await axios.post(`${url}/login`,obj)
     return returned.data
+}
+catch(error){
+    alert("Invalid Credentials")
+}
 }
 
 export const onProposalsLoad=async()=>{
@@ -23,6 +27,17 @@ export const onPropose=async(obj)=>{
     // alert(JSON.stringify(obj))
     try{
     const returned = await axios.post(`${url}/seminar/ecrProposal/${obj.event_name}`,obj)
+    return returned.data
+    }
+    catch(error){
+        alert("Please fill all fields")
+    }
+}
+export const onComplete=async(obj,report_id)=>{
+    // alert(report_id)
+    // alert(obj.event_time)
+    try{
+    const returned = await axios.put(`${url}/seminar/ecrCompletion/data_management_seminar/${report_id}`,obj)
     return returned.data
     }
     catch(error){
@@ -49,6 +64,13 @@ export const Table=async()=>
     const temp=await axios.get(`${url}/seminar/dept/1`);
     // console.log(temp.data)
     return temp;
+}
+export const onTable=async(report_id)=>
+{
+    const temp=await axios.post(`${url}/seminar/report/${report_id}`);
+    // alert(temp.rows)
+    return temp.data;
+   
 }
 
 export const callLoadForLevel2=async(empid)=>{

@@ -100,6 +100,22 @@ route.get('/currentAcademicYear',async(req,res)=>{
 
 /////////////////////////////////
 
+route.post('/report/:report_id',async(req,res)=>{
+    const report_id=req.params.report_id
+    const sql="select * from data_management_seminar where report_id=?"
+    base.query(sql,[report_id],(err,rows)=>{
+        if(err){
+            res.status(500).json({error:err.message})
+            return
+        }
+        if(rows.length==0){
+            res.status(404).json({error:"Invalid report_id"})
+            return
+        }
+        res.status(200).json(rows[0])
+    })
+})
+
 route.get('/dept/:obj',async(req,res)=>{
     // console.log(req.params.obj)
     let received=req.params.obj.split("-")
@@ -850,11 +866,11 @@ route.get('/loadecrCompletion/:deptId/:tableName',async(req,res)=>{
 
 route.put('/ecrCompletion/:tableName/:report_id',async(req,res)=>{
     // receive the request from client
-    const{event_photo_1,event_photo_2,event_po,pdf,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized}=req.body
-    sql=`update ${req.params.tableName} set event_photo_1=?, event_photo_2=?, event_po=?, pdf=?, event_date_from=?, event_date_to=?, event_organizing_secretary=?, event_time=?, event_description=?, event_budget_utilized=? where report_id=? and final_proposal_status=1 and report_completion_status=0 and final_completion_status=0 and final_report_status=0`
-        base.query(sql,[event_photo_1,event_photo_2,event_po,pdf,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized,req.params.report_id],(err,ack)=>{
+    const{event_photo_1,event_photo_2,event_po,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized}=req.body
+    sql=`update ${req.params.tableName} set event_photo_1=?, event_photo_2=?, event_po=?, event_date_from=?, event_date_to=?, event_organizing_secretary=?, event_time=?, event_description=?, event_budget_utilized=? where report_id=? and final_proposal_status=1 and report_completion_status=0 and final_completion_status=0 and final_report_status=0`
+        base.query(sql,[event_photo_1,event_photo_2,event_po,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized,req.params.report_id],(err,ack)=>{
             if(err){
-                res.status(500).json({error:err.message})
+                res.status(500).json({error:err.message+"error "})
                 return
             }
             res.status(200).json({message:"Workshop Completion Report has sent"})

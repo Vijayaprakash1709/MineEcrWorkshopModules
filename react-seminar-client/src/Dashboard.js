@@ -6,6 +6,8 @@ import { HodDashboard } from "./HodDashboard"
 import { FacultyPage } from "./FacultyPage"
 import { Add } from "./Add"
 import { PrincipalDashboard } from "./PrincipalDashboard"
+import { EcrInput } from "./ecrInput"
+import PDFGenerator from "./pdfGenerator"
 
 
 
@@ -48,6 +50,8 @@ export const Dashboard=()=>{
                             <Route path="ecr" element={<CreateEvent/>} />
                             <Route path="add" element={<Add/>} />
                             {/* <Route path="setaf" element={} /> */}
+                            <Route path="ecrInput" element={<EcrInput/>} />
+                            <Route path="viewPdf" element={<PDFGenerator/>} />
                             
                         </Routes>
                     </BrowserRouter>

@@ -33,6 +33,42 @@ Content-Type: application/json
 }
 
 
+####
+
+PUT http://localhost:1234/seminar/ecrCompletion/data_management_seminar/5016
+Content-Type: application/json
+
+{
+    "event_budget_utilized"
+: 
+"10",
+"event_date_from"
+: 
+"2023-10-30",
+"event_date_to"
+: 
+"2023-11-29",
+
+"event_description"
+: 
+"demo",
+"event_organizing_secretary"
+: 
+"Dr.G.Kavitha",
+"event_photo_1"
+: 
+"Blockchain1_05-11-2023_20-53-41.png",
+"event_photo_2"
+: 
+"Blockchain2_05-11-2023_20-53-41.png",
+"event_po"
+: 
+"PO1, PO3",
+"event_time"
+: 
+"20:59"
+}
+
 
 
 
@@ -109,7 +145,7 @@ GET http://localhost:1234/ecrWorkshop/loadforCompletion/1
 ###
 
 ### Faculty is updating the completion report
-PUT http://localhost:1234/ecrWorkshop/ecrCompletion/RPT0000001
+PUT http://localhost:1234/ecrWorkshop/ecrCompletion/0000001
 Content-Type: application/json
 
 {

@@ -3,10 +3,57 @@ const router=express.Router()
 const cors=require('cors')
 const base=require('./db')
 const fs=require('fs')
+const multer = require('multer');
+const path = require('path');
 
 
 router.use(cors())
 
+
+// Set up the storage for uploaded files
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'D:\Project_Images\\'); // Specify the directory where you want to store uploaded images
+    },
+    filename: (req, file, cb) => {
+        // const currentDate = new Date();
+// const formattedDate = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
+      cb(null, file.originalname );
+    },
+  });
+  
+
+  
+  const upload = multer({ storage });
+  
+  router.post('/upload1', upload.any(), (req, res) => {
+    if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+    }
+    res.send('Image uploaded and saved on the server.');
+  });
+
+  const storage1 = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'D:\Project_Images\\'); // Specify the directory where you want to store uploaded images
+    },
+    filename: (req, file, cb) => {
+        // const currentDate = new Date();
+// const formattedDate = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
+      cb(null, file.originalname);
+    },
+  });
+  
+
+  
+  const upload1 = multer({ storage1 });
+  
+  router.post('/upload2', upload1.any(), (req, res) => {
+    if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+    }
+    res.send('Image uploaded and saved on the server.');
+  });
 
 
 

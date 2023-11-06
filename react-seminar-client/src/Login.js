@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { onLogin } from "./connect"
 
+import "./sty.css"
+
 
 export const Login=()=>{
 
@@ -30,13 +32,20 @@ export const Login=()=>{
 
     return(
         <>
+        <head style={{alignItems:'center'}} className="login-container">
+           
+          
+        <img src="https://mec.edu.in/wp-content/uploads/2021/02/main-logo.png"  class="icn menuicn"/>
+       
+        </head>
+        <body style={{backgroundImage: 'url(https://mec.edu.in/wp-content/uploads/2021/10/8.png)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed'}}>
             <div className="container">
-                <div className="d-flex flex-row justify-content-center align-items-center" style={{height:'100vh'}}>
+                <div className="d-flex flex-row justify-content-center align-items-center" style={{height:'100vh',alignItems:'left'}}>
                     <div className="col-12 col-sm-12 col-md-8 col-mg-7">
-                        <h1 className="text-center text-info">Muthayammal Engineering College, Rasipuram</h1>
+                        {/* <h1 className="text-center text-info">Muthayammal Engineering College, Rasipuram</h1> */}
                     </div>
-                    <div className="col-12 col-sm-12 col-md-4 col-lg-5 shadow p-5 rounded-2">
-                        <div className="form group">
+                    <div className="col-12 col-sm-12 col-md-4 col-lg-5 shadow p-5 rounded-2" style={{backgroundColor:'#f7f1d7',height:'38%'}}>
+                        <div >
                             <label>Faculty ID</label>
                             <input type="email" name="mail" value={logger.mail} onChange={gather} placeholder="Faculty Id to login" className="form-control" />
                         </div>
@@ -51,6 +60,7 @@ export const Login=()=>{
                     </div>
                 </div>
             </div>
+            </body>
         </>
     )
 }

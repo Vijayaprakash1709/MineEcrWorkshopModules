@@ -23,7 +23,7 @@ export const Add=()=>{
         fillPorposals()
         Acad();
      
-      axios.get('http://192.168.214.14:1234/seminar/find')
+      axios.get('http://localhost:1234/seminar/find')
         .then((response) => {
         //   console.log(response);
           setOptions(response.data.rows);
@@ -119,47 +119,6 @@ export const Add=()=>{
       
 
     const[facid,setFacid]=useState([])
-
-
-
-
-
-    // const handleChange = (eve) => {
-    //     let updatedFacidString = facid; // Initialize the string with the current facid value
-      
-    //     for (var i = 0; i < eve.length; i++) {
-    //       var found = false;
-      
-    //       for (var j = 0; j < updatedFacidString.length; j++) {
-    //         if (eve[i].value === updatedFacidString[j]) {
-    //           found = true;
-    //           break;
-    //         }
-    //       }
-      
-    //       if (!found) {
-    //         if (updatedFacidString) {
-    //           updatedFacidString += ','; // Add a comma as a separator
-    //         }
-    //         updatedFacidString += eve[i].value;
-    //         alert("setFacid works");
-    //       }
-    //     }
-      
-    //     setFacid(updatedFacidString);   
-    //     setSelectedOptions(eve);
-      
-    //     setSeminar((old) => {
-
-    //       return {
-    //         ...old,
-    //         event_coordinator: updatedFacidString
-    //       };
-    //     });
-    //   }
-      
-      
-
 
     const handleChange = (eve) => {
         let updatedFacidString = facid;
@@ -335,17 +294,7 @@ export const Add=()=>{
 </select>
 
 
-     {/* <label >Nature of the event :</label>
-
-                        <select name="event_name" className="form-select" value={seminar.event_name} onChange={infoCollect}  style={{width:'80%'}}>
-                        <option value="">Select Event Nature .......</option>
-                        <option value="data_ecr_workshop">Workshop</option>
-                        <option value="Seminar">Seminar</option>
-                        <option value="Conference">Conference</option>
-                        <option value="Technical Symposium">Technical Symposium</option>
-                        <option value="Guest Lecture">Guest Lecture</option>
-                        <option value="FDP">FDP</option>
-                        </select> */}
+    
                     </div>
                 
             <div className="form group">

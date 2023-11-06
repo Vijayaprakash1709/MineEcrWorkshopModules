@@ -1,5 +1,5 @@
 
-import {Table} from './connect';
+import {Table,onTable} from './connect';
 import React, { useState, useEffect} from 'react';
 import "./sty.css"
 
@@ -13,12 +13,15 @@ export const CreateEvent=()=>{
         }
         useEffect(() =>{
          doSomething();
+         
         },[])
 
-    //   useEffect(async()=>{
-    //       const res=await Table()
-    //       setAllvalues(res.data)
-    //   },[])
+        // const onClicked=async(report)=>{
+            
+        //     const temp=await onTable(report)
+        //     sessionStorage.setItem("report_id",JSON.stringify(temp))
+        //     // window.location.assign("/ecr")
+        // }
 
    
 
@@ -92,7 +95,7 @@ export const CreateEvent=()=>{
                                     <td>{data.event_date.split('-').reverse().join('-')}</td>
                                     <td>ECR</td>
                                     <td>{(data.event_name)}</td>
-                                    
+                                    {/* <td><a className="topic-heading" href="/ecrInput"><button type="button" className="btn btn-outline-info col-3" onClick={onClicked(data.report_id)}>{data.report_id}</button></a></td> */}
                                     <td>{data.proposal_date.split('-').reverse().join('-')}</td>
                                    
                                   
@@ -106,6 +109,7 @@ export const CreateEvent=()=>{
                                         {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
+                                        <td><a className="topic-heading" href="/ecrInput"><h1>ecrInput</h1></a></td>
                                         </>
                                         :
                                         (data.report_proposal_status===1) ? 
@@ -117,6 +121,7 @@ export const CreateEvent=()=>{
                                         {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
+                                        <td><a className="topic-heading" href="/viewPdf"><h3 style={{color:'blue'}}>View proposal</h3></a></td>
                                         </>
                                         :
                                         (data.report_proposal_status===2) ?
@@ -127,6 +132,7 @@ export const CreateEvent=()=>{
                                         {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
+                                        <td><a className="topic-heading" href="/ecrInput"><h3 style={{color:'blue'}}>Create ECR</h3></a></td>
                                         </>
                                         :
                                         (data.report_proposal_status===-1) ?
