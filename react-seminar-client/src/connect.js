@@ -52,9 +52,19 @@ export const loadForLevel1=async(dept,emp)=>{
     return receive.data.rows
 
 }
+export const loadComForLevel1=async(dept,emp)=>{
+    // alert(dept)
+    const receive = await axios.get(`${url}/seminar/completionloadforlevel1/data_management_seminar/${dept}/${emp}`)
+    return receive.data.rows
+
+}
 
 export const approveLevel1=async(dept,emp,report_id)=>{
     const receive = await axios.put(`${url}/seminar/acknowledgelevel1/data_management_seminar/${dept}/${emp}/${report_id}`)
+    return receive.data
+}
+export const approveComLevel1=async(dept,emp,report_id)=>{
+    const receive = await axios.put(`${url}/seminar/completionacknowledgelevel1/data_management_seminar/${dept}/${emp}/${report_id}`)
     return receive.data
 }
 export const Table=async()=>
@@ -85,11 +95,33 @@ try {
  console.log("No request found")
   }
 }
+export const callLoadComForLevel2=async(empid)=>{
+    const deptid = 1;
+
+try {
+    const response = await axios.get(`${url}/seminar/completionloadforlevel2/data_management_seminar/${deptid}/${empid}`);
+    return response.data;
+  } catch (error) {
+ console.log("No request found")
+  }
+}
 
 
 export const callAcceptLevel2=async(dept,empid,report_id)=>{
+    
     try{
     const response=await axios.put(`${url}/seminar/acknowledgelevel2/data_management_seminar/${dept}/${empid}/${report_id}`)
+    return response.data
+    }
+    catch (error){
+        alert("Accept Error")
+    }
+}
+
+export const callAcceptComLevel2=async(dept,empid,report_id)=>{
+    alert(dept+','+report_id+','+empid)
+    try{
+    const response=await axios.put(`${url}/seminar/completionacknowledgelevel2/data_management_seminar/${dept}/${empid}/${report_id}`)
     return response.data
     }
     catch (error){
@@ -124,10 +156,11 @@ export const SubReport=async(mid)=>{
     return ids
     
 }
-export const Academic=async()=>{
-    const re=await axios.get(`${url}/seminar/currentAcademicYear`)
+export const Academic=async(sid)=>{
+    // const si=3003;
+    const re=await axios.get(`${url}/seminar/getAcdYrWithSubType/${sid}`)
     let ids=[]
-    re.data.rows.map((v)=>{
+    re.data.map((v)=>{
         ids.push(v)
     })
     return ids

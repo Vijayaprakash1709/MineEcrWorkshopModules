@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { callAcceptLevel2,callLoadForLevel2} from "./connect";
+import { callAcceptLevel2,callLoadForLevel2,callLoadComForLevel2,callAcceptComLevel2} from "./connect";
 import './sty.css';
 import { PrincipalMenu } from "./PrincipalMenu";
 
@@ -28,9 +28,23 @@ export const ViewReqPrincipal=()=>{
         //     alert("No request")
         // }
     }
+    const load=async()=>{
+        try{
+        const logged=JSON.parse(sessionStorage.getItem("person"))
+        const temp = await callLoadComForLevel2(logged.faculty_id)
+        setEcrs(temp.rows)
+        }
+        catch(error){
+            alert("No request")
+        }
+        // if(temp.error=="No matches"){
+        //     alert("No request")
+        // }
+    }
 
     useEffect(()=>{
         loadSeminars();
+        load();
     },[])
 
 
@@ -63,7 +77,7 @@ export const ViewReqPrincipal=()=>{
                                     <tr>
                                         <th>Report ID</th><th>Title</th><th>Major Type</th><th>Sub Type</th>
                                         <th>Event Date</th><th>Co ordinator</th>
-                                        <th>Action</th>
+                                        <th>Action</th><th>Event</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,7 +98,20 @@ export const ViewReqPrincipal=()=>{
                                                 <button type="button" onClick={async()=>{
                                                     
                                                         // alert(val.workshop_id+" "+val.dept_id)
-                                                        try{
+                                                        
+                                                            if(val.completion===1){
+                                                                // ale  rt("-----")
+                                                                try{
+                                                                const logged=JSON.parse(sessionStorage.getItem("person"))
+                                                        const temp=await callAcceptComLevel2(val.dept_id,logged.faculty_id,val.report_id)
+                                                        setInfo(temp)
+                                                                }
+                                                                catch(err){
+                                                                    alert("No Data Found")
+                                                                }
+                                                            }
+                                                            else{
+                                                            try{
                                                         const logged=JSON.parse(sessionStorage.getItem("person"))
                                                         const temp=await callAcceptLevel2(val.dept_id,logged.faculty_id,val.report_id)
                                                         setInfo(temp)
@@ -93,6 +120,7 @@ export const ViewReqPrincipal=()=>{
                                                         catch(error){
                                                             alert("No data Found");
                                                         }
+                                                    }
                                                        
                                                         if(info==='error'){
                                                             <h1>No request found</h1>
@@ -107,6 +135,7 @@ export const ViewReqPrincipal=()=>{
                                                     }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
                                                     </td>
+                                                    <td><a className="topic-heading" href="/viewPdf"><h3 style={{color:'blue'}}>View proposal</h3></a></td>
                                             </tr>
                                         ))
                                     }

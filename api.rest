@@ -69,8 +69,13 @@ Content-Type: application/json
 "20:59"
 }
 
+##
+PUT http://localhost:1234/seminar/completionacknowledgelevel2/data_management_seminar/1/6000/5020
 
 
+##
+
+GET http://localhost:1234/seminar/getAcdYrWithSubType/3003
 
 ###
 

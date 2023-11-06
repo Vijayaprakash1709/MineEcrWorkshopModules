@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { onTable ,onComplete} from './connect';
 import './sty.css';
+import { format } from 'date-fns';
 
 
 export const EcrInput = () => {
     const [selectedFile1, setSelectedFile1] = useState(null);
     const [selectedFile2, setSelectedFile2] = useState(null);
+    const [selectedFile3, setSelectedFile3] = useState(null);
+    const [selectedFile4, setSelectedFile4] = useState(null);
+    const [selectedFile5, setSelectedFile5] = useState(null);
     const [newFileName, setNewFileName] = useState('');
     const [formData, setFormData] = useState({
-
+      "completion_date":"",
+      
         "event_photo_1":"",
         "event_photo_2":"",
+        "event_photo_3":"",
+        "event_photo_4":"",
+        "event_photo_5":"",
         "event_po":"",
         "event_date_from":"",
         "event_date_to":"",
@@ -51,6 +59,13 @@ console.log(newFileName)
           ...formData,
           [name]: newValue,
         });
+        setFormData((old) => {
+          const date = new Date(); // Replace with your actual date value
+          const currentDate = format(date, 'dd-MM-yyyy');
+          return {
+            ...old,
+            completion_date: currentDate
+          }})
         try{
         const arrayAsString = formData.event_po.join(", ");
         setFormData({
@@ -60,7 +75,7 @@ console.log(newFileName)
           alert(arrayAsString)
         }
         catch(err){
-          
+
         }
       };
     
@@ -88,6 +103,15 @@ console.log(newFileName)
     const handleFileChange2 = (e) => {
         setSelectedFile2(e.target.files[0]);
       };
+      const handleFileChange3 = (e) => {
+        setSelectedFile3(e.target.files[0]);
+      };
+      const handleFileChange4 = (e) => {
+        setSelectedFile4(e.target.files[0]);
+      };
+      const handleFileChange5 = (e) => {
+        setSelectedFile5(e.target.files[0]);
+      };
   
  
   
@@ -106,14 +130,26 @@ const min = String(currentDate.getMinutes()).padStart(2, '0');
 const ss = String(currentDate.getSeconds()).padStart(2, '0');
 
 const dateTimeString = `${dd}-${mm}-${yyyy}_${hh}-${min}-${ss}`;
-          const name1=newFileName+'1_'+dateTimeString+'.png';
-          const name2=newFileName+'2_'+dateTimeString+'.png';
+ // Maximum value for the random number
+let random =Math.random()*Math.random()*1;
+          const name1=newFileName+'1_'+dateTimeString+'_'+random+'.png';
+          random =Math.random()*Math.random()*2;
+          const name2=newFileName+'2_'+dateTimeString+'_'+random+'.png';
+          random =Math.random()*Math.random()*3;
+          const name3=newFileName+'3_'+dateTimeString+'_'+random+'.png';
+          random =Math.random()*Math.random()*4;
+          const name4=newFileName+'4_'+dateTimeString+'_'+random+'.png';
+          random =Math.random()*Math.random()*5;
+          const name5=newFileName+'5_'+dateTimeString+'_'+random+'.png';
           formData1.append('file', selectedFile1,name1 );
           // alert("Hello");
           setFormData({
             ...formData,
             event_photo_1: name1,
             event_photo_2: name2,
+            event_photo_3: name3,
+            event_photo_4: name4,
+            event_photo_5: name5,
           });
           
        
@@ -133,6 +169,124 @@ const dateTimeString = `${dd}-${mm}-${yyyy}_${hh}-${min}-${ss}`;
            
         }
       }
+      const handleUpload2 = () => {
+        if (selectedFile3 && newFileName) {
+            const formData3 = new FormData();
+            const currentDate = new Date();
+
+            const dd = String(currentDate.getDate()).padStart(2, '0');
+            const mm = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1
+            const yyyy = currentDate.getFullYear();
+            
+            const hh = String(currentDate.getHours()).padStart(2, '0');
+            const min = String(currentDate.getMinutes()).padStart(2, '0');
+            const ss = String(currentDate.getSeconds()).padStart(2, '0');
+            
+            const dateTimeString = `${dd}-${mm}-${yyyy} ${hh}-${min}-${ss}`;
+            const random =Math.random()*Math.random()*3;
+                        const name3=newFileName+'3_'+dateTimeString+'_'+random+'.png';
+            formData3.append('file', selectedFile3,name3 );
+           
+            setFormData({
+                
+              ...formData,
+              event_photo_3: name3,
+            })
+            fetch('http://localhost:1234/ecr/upload1', {
+                method: 'POST',
+                body: formData3,
+              })
+                .then((response) => response.text())
+                .then((data) => {
+                  console.log(data);
+                })
+                .catch((error) => {
+                  console.error('Error uploading the file 3:', error);
+                })
+          
+               
+        }
+    }
+
+    const handleUpload3 = () => {
+      if (selectedFile4 && newFileName) {
+          const formData4 = new FormData();
+          const currentDate = new Date();
+
+          const dd = String(currentDate.getDate()).padStart(2, '0');
+          const mm = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1
+          const yyyy = currentDate.getFullYear();
+          
+          const hh = String(currentDate.getHours()).padStart(2, '0');
+          const min = String(currentDate.getMinutes()).padStart(2, '0');
+          const ss = String(currentDate.getSeconds()).padStart(2, '0');
+          
+          const dateTimeString = `${dd}-${mm}-${yyyy} ${hh}-${min}-${ss}`;
+          const random =Math.random()*Math.random()*4;
+          const name4=newFileName+'4_'+dateTimeString+'_'+random+'.png';
+          formData4.append('file', selectedFile4,name4 );
+         
+          setFormData({
+              
+            ...formData,
+            event_photo_4: name4,
+          })
+          fetch('http://localhost:1234/ecr/upload1', {
+              method: 'POST',
+              body: formData4,
+            })
+              .then((response) => response.text())
+              .then((data) => {
+                console.log(data);
+              })
+              .catch((error) => {
+                console.error('Error uploading the file 4:', error);
+              })
+        
+             
+      }
+  }
+
+  const handleUpload4 = () => {
+    if (selectedFile5 && newFileName) {
+        const formData5 = new FormData();
+        const currentDate = new Date();
+
+        const dd = String(currentDate.getDate()).padStart(2, '0');
+        const mm = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1
+        const yyyy = currentDate.getFullYear();
+        
+        const hh = String(currentDate.getHours()).padStart(2, '0');
+        const min = String(currentDate.getMinutes()).padStart(2, '0');
+        const ss = String(currentDate.getSeconds()).padStart(2, '0');
+        
+        const dateTimeString = `${dd}-${mm}-${yyyy} ${hh}-${min}-${ss}`;
+        const random =Math.random()*Math.random()*5;
+        const name5=newFileName+'5_'+dateTimeString+'_'+random+'.png';
+        formData5.append('file', selectedFile5,name5 );
+       
+        setFormData({
+            
+          ...formData,
+          event_photo_5: name5,
+        })
+        fetch('http://localhost:1234/ecr/upload1', {
+            method: 'POST',
+            body: formData5,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error('Error uploading the file 4:', error);
+            })
+      
+           
+    }
+}
+
+
       const handleUpload1 = () => {
         if (selectedFile2 && newFileName) {
             const formData2 = new FormData();
@@ -147,7 +301,8 @@ const dateTimeString = `${dd}-${mm}-${yyyy}_${hh}-${min}-${ss}`;
             const ss = String(currentDate.getSeconds()).padStart(2, '0');
             
             const dateTimeString = `${dd}-${mm}-${yyyy} ${hh}-${min}-${ss}`;
-            const name2=newFileName+'2_'+dateTimeString+'.png';
+            const random =Math.random()*Math.random()*2;
+            const name2=newFileName+'2_'+dateTimeString+'_'+random+'.png';
             formData2.append('file', selectedFile2,name2 );
            
             setFormData({
@@ -164,10 +319,15 @@ const dateTimeString = `${dd}-${mm}-${yyyy}_${hh}-${min}-${ss}`;
                   console.log(data);
                 })
                 .catch((error) => {
-                  console.error('Error uploading the file:', error);
+                  console.error('Error uploading the file 2:', error);
                 })
           
+                
+                handleUpload2();
+                handleUpload3();
+                handleUpload4();
                 handleUpload();
+
         }
     }
     
@@ -230,7 +390,16 @@ const dateTimeString = `${dd}-${mm}-${yyyy}_${hh}-${min}-${ss}`;
       <input type="file" id="event_photo_1" name="event_photo_1" accept="image/*" onChange={handleFileChange1} /><br />
 
       <label htmlFor="event_photo_2">Photo 2:</label>
-      <input type="file" id="event_photo_2" name="event_photo_2" accept="image/*" onChange={handleFileChange2} />
+      <input type="file" id="event_photo_2" name="event_photo_2" accept="image/*" onChange={handleFileChange2} /><br/>
+
+      <label htmlFor="event_photo_3">Photo 3:</label>
+      <input type="file" id="event_photo_3" name="event_photo_3" accept="image/*" onChange={handleFileChange3} /><br/>
+
+      <label htmlFor="event_photo_4">Photo 4:</label>
+      <input type="file" id="event_photo_4" name="event_photo_4" accept="image/*" onChange={handleFileChange4} /><br/>
+
+      <label htmlFor="event_photo_5">Photo 5:</label>
+      <input type="file" id="event_photo_5" name="event_photo_5" accept="image/*" onChange={handleFileChange5} />
       
       </form>
       <br></br>

@@ -866,9 +866,9 @@ route.get('/loadecrCompletion/:deptId/:tableName',async(req,res)=>{
 
 route.put('/ecrCompletion/:tableName/:report_id',async(req,res)=>{
     // receive the request from client
-    const{event_photo_1,event_photo_2,event_po,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized}=req.body
-    sql=`update ${req.params.tableName} set event_photo_1=?, event_photo_2=?, event_po=?, event_date_from=?, event_date_to=?, event_organizing_secretary=?, event_time=?, event_description=?, event_budget_utilized=? where report_id=? and final_proposal_status=1 and report_completion_status=0 and final_completion_status=0 and final_report_status=0`
-        base.query(sql,[event_photo_1,event_photo_2,event_po,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized,req.params.report_id],(err,ack)=>{
+    const{event_photo_1,event_photo_2,event_po,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized,completion_date}=req.body
+    sql=`update ${req.params.tableName} set event_photo_1=?, event_photo_2=?, event_po=?, event_date_from=?, event_date_to=?, event_organizing_secretary=?, event_time=?, event_description=?, event_budget_utilized=? ,completion_date=? ,completion=1 where report_id=? and final_proposal_status=1 and report_completion_status=0 and final_completion_status=0 and final_report_status=0`
+        base.query(sql,[event_photo_1,event_photo_2,event_po,event_date_from,event_date_to,event_organizing_secretary,event_time,event_description,event_budget_utilized,completion_date,req.params.report_id],(err,ack)=>{
             if(err){
                 res.status(500).json({error:err.message+"error "})
                 return
@@ -890,7 +890,7 @@ route.get('/completionloadforlevel1/:tableName/:deptId/:empId',async(req,res)=>{
             res.status(404).json({error:"No matches"})
             return
         }
-        sql=`select * from ${req.params.tableName} where final_proposal_status=1 and lvl_1_completion_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
+        sql=`select * from ${req.params.tableName} where completion=1 and final_proposal_status=1 and lvl_1_completion_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
         base.query(sql,[dId],(err,rows)=>{
             if(err){res.status(500).json({error:err.message});return;}
             if(row.length==0){res.status(404).json({error:"Nothing to show"})}
@@ -1035,7 +1035,7 @@ route.get('/completionloadforlevel2/:tableName/:deptId/:empId',async(req,res)=>{
             res.status(404).json({error:"No matches"})
             return
         }
-        sql=`select * from ${req.params.tableName} where report_completion_status=1 and lvl_2_completion_sign is null and final_proposal_status=1 and final_completion_status=0 and final_report_status=0 and dept_id=?`
+        sql=`select * from ${req.params.tableName} where completion=1 and report_completion_status=1 and lvl_2_completion_sign is null and final_proposal_status=1 and final_completion_status=0 and final_report_status=0 and dept_id=?`
         base.query(sql,[dId],(err,rows)=>{
             if(err){res.status(500).json({error:err.message});return;}
             if(row.length==0){res.status(404).json({error:"Nothing to show"})}
@@ -1650,6 +1650,63 @@ route.put('/reject/:tableName/:deptId/:empId/:report_id',async(req,res)=>{
         }
     })
 })
+
+route.get('/getAcdYrWithSubType/:tableName', async (req, res) => {
+    const acdYrResults = [];
+    try {
+        const sql1 = 'SELECT acd_status FROM data_sub_report_type WHERE table_name = ?';
+        const rows = await new Promise((resolve, reject) => {
+            base.query(sql1, [req.params.tableName], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+
+        if (rows.length === 0) {
+            return res.status(201).json({ error: 'No matches found' });
+        }
+
+        const definedYr = rows[0].acd_status.split(',');
+
+        for (let i = 0; i < definedYr.length; i++) {
+            const sql2 = 'SELECT acd_yr,acd_start,acd_yr_id FROM predefined_academic_year WHERE acd_status = ?';
+            const results = await new Promise((resolve, reject) => {
+                base.query(sql2, [definedYr[i]], (err, results) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            });
+
+            if (results.length === 0) {
+                return res.status(201).json({ error: 'No matches found' });
+            }
+
+            acdYrResults.push(results[0]);
+        }
+
+        res.status(200).json(acdYrResults);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+route.get('/data/:report_id', (req, res) => {
+    const report_id = req.params.report_id;
+    const sql =  `SELECT * FROM data_management_seminar where report_id=?`;
+    
+  base.query(sql,[report_id], (err, results) => {
+      if (err) throw err;
+  
+      res.json(results[0]);
+    });
+  });
+
+
 
 
 module.exports = route

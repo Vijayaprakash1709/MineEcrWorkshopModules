@@ -21,7 +21,7 @@ export const Add=()=>{
         Ven();
         Maj();
         fillPorposals()
-        Acad();
+       
      
       axios.get('http://localhost:1234/seminar/find')
         .then((response) => {
@@ -101,9 +101,16 @@ export const Add=()=>{
         }
     const[year,setYear]=useState([])
         const Acad=async()=>{
-            const t = await Academic()
-            setYear(t)
+            let sid=seminar.event_name;
+            try{
+            const t = await Academic(sid)
             // alert(t)
+            setYear(t)
+            }
+            catch(err){
+                // alert("Not Found")
+            }
+            
         }
         const Maj=async()=>{
             const t = await Major()
@@ -126,7 +133,7 @@ export const Add=()=>{
           const valueToAdd = eve[i].value;
       
           if (!updatedFacidString.includes(valueToAdd)) {
-            if (updatedFacidString && updatedFacidString.length>0) {
+            if (updatedFacidString && updatedFacidString.length>1) {
 
               updatedFacidString += ','; // Add a comma as a separator
             }
@@ -167,9 +174,10 @@ export const Add=()=>{
     
   console.log(seminar)
   
+//   const[subid,setSubId]=useState([])
 
  
-    
+//   Acad(subid);
 //   console.log(selectedOptions)
     
 
@@ -251,29 +259,6 @@ export const Add=()=>{
      
 
      <div className="form group">
-
-
-     {/* <Select
-        isMulti
-        options={options}
-        value={selectedOptions}
-        onChange={handleChange}
-        isSearchable
-        placeholder="Select options..."
-        closeMenuOnSelect={false} 
-      /> */}
-
-    
-      {/* <CMultiSelect allowCreateOptions options={facultySelect} /> */}
-     {/* <select name="cars" id="cars" multiple multiselect-hide-x="true">
-  <option value="1">Audi</option>
-  <option selected value="2">BMW</option>
-  <option selected value="3">Mercedes</option>
-  <option value="4">Volvo</option>
-  <option value="5">Lexus</option>
-  <option value="6">Tesla</option>
-</select> */}
-
      <label for="major_id">Major Type :</label>
      <select name="major_id" value={seminar.major_id} onChange={infoCollect}>
   <option value="">Select Major Type .......</option>
@@ -286,10 +271,16 @@ export const Add=()=>{
 <label for="event_name">Sub Type :</label>
 <select name="event_name" value={seminar.event_name} onChange={infoCollect}>
   <option value="">Select Event Nature .......</option>
-  {
+  { 
                                 sub.map((val,key)=>{
+                                    
+                                    // temp=val.sub_report_id
+                                    
                                     return (<option key={val.sub_report_id} value={`data_management_${val.sub_report}`}>{val.sub_report}</option>)
+                                    
                                 })
+
+                                // setSubId(temp)
                             }
 </select>
 
@@ -399,12 +390,12 @@ export const Add=()=>{
 
         
       <label htmlFor="acdyr_id">Academic Year:</label>
-      <select name="acdyr_id" className="form group" onChange={infoCollect} value={seminar.acad_yr_id}>
+      <select name="acdyr_id" className="form group" onClick={Acad}onChange={infoCollect} value={seminar.acad_yr_id}>
                         <option value="">Select Academic Year</option>
                             {
                                 year.map((val,key)=>{
                                    
-                                    return (<option value={val.acd_yr_id}>{val.acd_yr}</option>)
+                                    return (<option key={val.acd_yr_id} value={val.acd_yr_id}>{val.acd_yr}</option>)
                                 })
                             }
                         </select>

@@ -1,19 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { HodMenu } from "./HodMenu"
 import { ViewSeminar } from "./ViewSeminar"
+import PDFGenerator from "./pdfGenerator"
 
 export const HodDashboard=()=>{
     return(
         <>
             <BrowserRouter>
                 <HodMenu/>
-                <ViewSeminar/>
-                <Routes>
-                    {/* <Route path="ecr" element={<ViewSeminar/>} /> 
-                     <Route path="setaf" element={<ViewSetAfs/>} />
-                    <Route path="faculties" element={<FilterFaculties/>} />
-                    <Route path="shortecr" element={<FilterEcrs/>} />
-                    <Route path="shortsetaf" element={<FilterSetAfs/>} /> */}
+                {/* <ViewSeminar/> */}
+                <Routes >
+                <Route path="" element={<ViewSeminar/>} />
+                <Route path="viewPdf" element={<PDFGenerator/>} />
                 </Routes>
             </BrowserRouter>
         </>

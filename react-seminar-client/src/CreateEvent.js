@@ -105,31 +105,31 @@ export const CreateEvent=()=>{
                
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
+                                        {/* <td></td> */}
                                         <td></td>
-                                        {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         <td><a className="topic-heading" href="/ecrInput"><h1>ecrInput</h1></a></td>
                                         </>
                                         :
-                                        (data.report_proposal_status===1) ? 
+                                        (data.report_proposal_status===1 && data.report_completion_status===0 ) ? 
                                         <>
                                         
                                         <td><h3 style={{color:'green'}}>Accepted</h3></td>
                                         <td>🕒Pending</td>
                                         <td></td>
-                                        {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
+
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         <td><a className="topic-heading" href="/viewPdf"><h3 style={{color:'blue'}}>View proposal</h3></a></td>
                                         </>
                                         :
-                                        (data.report_proposal_status===2) ?
+                                        (data.report_proposal_status===2 && data.report_completion_status===0 ) ?
                                         <>
                                         <td><h3 style={{color:'green'}}>Accepted</h3></td>
                                         <td><h3 style={{color:'green'}}>Accepted</h3></td>
-                                        <td></td>
-                                        {/* <td>{data.event_date.split('-').reverse().join('-')}</td> */}
+                                        <td>{data.completion_date}</td>
+                                   
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
                                         <td><a className="topic-heading" href="/ecrInput"><h3 style={{color:'blue'}}>Create ECR</h3></a></td>
@@ -145,8 +145,32 @@ export const CreateEvent=()=>{
 
                                         </>
                                         :
+                                        (data.report_completion_status===1)?
+
                                         <>
+                                          <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td>{data.completion_date}</td>
+                                   
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td>🕒Pending</td>
+                                        <td><a className="topic-heading" href="/viewPdf"><h3 style={{color:'blue'}}>View ECR</h3></a></td>
                                         </>
+                                       
+                                        :
+                                        (data.report_completion_status===2)?
+
+                                        <>
+                                          <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td>{data.completion_date}</td>
+                                   
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td><h3 style={{color:'green'}}>Accepted</h3></td>
+                                        <td><a className="topic-heading" href="/viewPdf"><h3 style={{color:'blue'}}>View ECR</h3></a></td>
+                                        </>
+                                        :
+                                        <></>
 }
                                     
                                 </tr>
