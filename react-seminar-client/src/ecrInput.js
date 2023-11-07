@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { onTable ,onComplete} from './connect';
 import './sty.css';
 import { format } from 'date-fns';
@@ -30,22 +30,35 @@ export const EcrInput = () => {
     //   const report=JSON.parse(sessionStorage.getItem("report_id"))
       
     //   console.log("report_id "+ report.report_id)
-    const [report_id, setreport_id] = useState('');
-    const handlereport_id = (e) => {
-        setreport_id(e.target.value);
-      };
+    // const [report_id, setreport_id] = useState('');
+    // const handlereport_id = (e) => {
+    //     setreport_id(e.target.value);
+    //   };
       const [Data, setData] = useState('');
       const handleNewFileNameChange = () => {
-        setNewFileName(Data.event_title);
+        const report=JSON.parse(sessionStorage.getItem("report_id"))
+        setNewFileName(report.event_title);
       };
-      const handlereport = async() => {
+      useEffect(() =>{
+        handlereport();
         
-        const temp=await onTable(report_id)
+       },[])
+      const handlereport = async() => {
+        try{
+        const report=JSON.parse(sessionStorage.getItem("report_id"))
+        // alert(report.report_id)
+        const temp=await onTable(report.report_id)
         setData(temp)
         // alert(temp.event_title)
         handleNewFileNameChange();
+        }
+        catch(err){
+          alert("go to back")
+        }
 
       }
+      const report=JSON.parse(sessionStorage.getItem("report_id"))
+      // alert(report.report_id)
       
         
 console.log(newFileName)
@@ -333,6 +346,7 @@ let random =Math.random()*Math.random()*1;
     
 
         const handleSubmit = async(e) => {
+          sessionStorage.removeItem("report_id")
           
             e.preventDefault();
             // handleUpload1();
@@ -372,14 +386,14 @@ let random =Math.random()*Math.random()*1;
           onChange={handleNewFileNameChange}
         /> */}
         
-         <input
+         {/* <input
           type="text"
           placeholder="Enter new file name"
           value={report_id}
           onChange={handlereport_id}
         />
      
-        <button onClick={handlereport}>send report_id</button>
+        <button onClick={handlereport}>send report_id</button> */}
         
       </div>
 

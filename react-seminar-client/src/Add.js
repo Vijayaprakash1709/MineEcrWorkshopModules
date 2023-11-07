@@ -290,7 +290,7 @@ export const Add=()=>{
                 
             <div className="form group">
                         <label for="event_title">Title of the Event :</label>
-                        <input onChange={infoCollect} value={seminar.event_title} type="text" name="event_title" placeholder="Event Title" className="form-control"/>
+                        <input onClick={Acad} onChange={infoCollect} value={seminar.event_title} type="text" name="event_title" placeholder="Event Title" className="form-control"/>
                     </div>
                     
                     <div className="form group">
@@ -390,7 +390,7 @@ export const Add=()=>{
 
         
       <label htmlFor="acdyr_id">Academic Year:</label>
-      <select name="acdyr_id" className="form group" onClick={Acad}onChange={infoCollect} value={seminar.acad_yr_id}>
+      <select name="acdyr_id" className="form group" onChange={infoCollect} value={seminar.acad_yr_id}>
                         <option value="">Select Academic Year</option>
                             {
                                 year.map((val,key)=>{

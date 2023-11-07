@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import Image from './logo.png';
@@ -9,8 +9,13 @@ import Image4 from './logo4.jpg';
 const InputPage = () => {
   const [id, setId] = useState('');
 
-
-
+  useEffect(() =>{
+    const report=JSON.parse(sessionStorage.getItem("report_id"))
+    setId(report.report_id)
+    
+    
+   },[])
+   
 
   const handleDownload = async () => {
     try {
