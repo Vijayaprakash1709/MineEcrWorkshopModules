@@ -20,7 +20,7 @@ export const CreateEvent=()=>{
    const viewPdf=async(report_id)=>{
     const report=JSON.parse(sessionStorage.getItem("report_id"))
     setId(report.report_id)
-    alert("view Working")
+    // alert("view Working")
     handleDownload();
     
 }
@@ -61,7 +61,7 @@ doc.rect(80, 40, 50, 7);
 doc.text('EVENT PROPOSAL', 85, 45);
 
 doc.rect(170, 40, 25, 7);
-doc.text(`${data.acdyr_id}`, 173, 45);//academic year
+doc.text(`2023-24`, 173, 45);//academic year
 
 doc.setFont("times","")
 doc.rect(10, 55, 10, 20).stroke();
@@ -344,7 +344,21 @@ doc.text('Principal', 155, 290);
                                         <td></td>
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
-                                        <td><a className="topic-heading" href="/ecrInput"><h1>ecrInput</h1></a></td>
+                                        <td><button
+  style={{
+    backgroundColor: '#0000ff', // Background color
+    color: 'white', // Text color
+    width: '90%', // Button width
+    
+    padding: '10px', // Padding
+    borderRadius: '5px', // Border radius
+    cursor: 'pointer', // Cursor style
+    border: 'none', // Remove the border
+  }} type="button" onClick={async()=>{
+                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                        pdfAccept(data.report_id);
+                                                       
+                                                    }} >View Proposal</button></td>
                                         </>
                                         :
                                         (data.report_proposal_status===1 && data.report_completion_status===0 ) ? 
@@ -383,7 +397,7 @@ doc.text('Principal', 155, 290);
                                         <td>🕒Pending</td>
                                         <td><a className="topic-heading" href="/ecrInput"><button
   style={{
-    backgroundColor: '#ff8080', // Background color
+    backgroundColor: ' #00997a', // Background color
     color: 'white', // Text color
     width: '90%', // Button width
     

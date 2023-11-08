@@ -119,7 +119,7 @@ export const callAcceptLevel2=async(dept,empid,report_id)=>{
 }
 
 export const callAcceptComLevel2=async(dept,empid,report_id)=>{
-    alert(dept+','+report_id+','+empid)
+    // alert(dept+','+report_id+','+empid)
     try{
     const response=await axios.put(`${url}/seminar/completionacknowledgelevel2/data_management_seminar/${dept}/${empid}/${report_id}`)
     return response.data
