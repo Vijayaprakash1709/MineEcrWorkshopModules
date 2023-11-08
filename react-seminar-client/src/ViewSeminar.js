@@ -363,7 +363,7 @@ doc.text('Principal', 155, 290);
                                                         // alert(val.workshop_id+" "+val.dept_id)
                                                         pdfAccept(val.report_id);
                                                        
-                                                    }} >View Proposal</button></td>
+                                                    }} >View ECR</button></td>
                                             </tr>
                                         ))
                                     }

@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const url="http://localhost:1234"
-
 export const onLogin=async(obj)=>{
    try{ const returned = await axios.post(`${url}/login`,obj)
     return returned.data

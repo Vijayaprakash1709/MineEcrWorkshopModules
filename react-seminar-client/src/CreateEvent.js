@@ -257,7 +257,7 @@ doc.text('Principal', 155, 290);
         }
         viewPdf(temp.report_id);
 
-        }
+        }                                     
    
 
 
