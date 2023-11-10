@@ -310,23 +310,23 @@ doc.text('Principal', 155, 290);
                                                 <td>{val.event_coordinator}</td>
                                                 <td className="row justify-content-evenly">
                                                 <button type="button" onClick={async()=>{
-                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                               
                                                         accept(val.dept_id,val.report_id,val.completion);
                                                     }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
                                                     </td>
                                                     <td><button
-  style={{
-    backgroundColor: '#0000ff', // Background color
-    color: 'white', // Text color
-    width: '90%', // Button width
-    
-    padding: '10px', // Padding
-    borderRadius: '5px', // Border radius
-    cursor: 'pointer', // Cursor style
-    border: 'none', // Remove the border
-  }} type="button" onClick={async()=>{
-                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                    style={{
+                                                        backgroundColor: '#0000ff', 
+                                                        color: 'white', 
+                                                        width: '90%', 
+                                                        
+                                                        padding: '10px', 
+                                                        borderRadius: '5px', 
+                                                        cursor: 'pointer', 
+                                                        border: 'none', 
+                                                    }} type="button" onClick={async()=>{
+                                                       
                                                         pdfAccept(val.report_id);
                                                        
                                                     }} >View Proposal</button></td>
@@ -344,23 +344,23 @@ doc.text('Principal', 155, 290);
                                                 <td>{val.event_coordinator}</td>
                                                 <td className="row justify-content-evenly">
                                                 <button type="button" onClick={async()=>{
-                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                       
                                                         accept(val.dept_id,val.report_id,val.completion);
                                                     }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
                                                     </td>
                                                     <td><button
-  style={{
-    backgroundColor: '#0000ff', // Background color
-    color: 'white', // Text color
-    width: '90%', // Button width
-    
-    padding: '10px', // Padding
-    borderRadius: '5px', // Border radius
-    cursor: 'pointer', // Cursor style
-    border: 'none', // Remove the border
-  }} type="button" onClick={async()=>{
-                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                    style={{
+                                                        backgroundColor: '#0000ff', 
+                                                        color: 'white', 
+                                                        width: '90%', 
+                                                        
+                                                        padding: '10px', 
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer', 
+                                                        border: 'none', 
+                                                    }} type="button" onClick={async()=>{
+                                                       
                                                         pdfAccept(val.report_id);
                                                        
                                                     }} >View ECR</button></td>

@@ -23,7 +23,8 @@ export const FacultyMenu=()=>{
             <div style={{color :'#3236a8',fontSize:'27px',fontWeight:'bold'}}>
          ID: {logged.faculty_id}</div> 
 
-     
+
+
      
      <Navbar bg="light" expand="lg">
                 <Container>
