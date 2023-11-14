@@ -91,7 +91,7 @@ try {
     const response = await axios.get(`${url}/seminar/loadforlevel2/data_management_seminar/${deptid}/${empid}`);
     return response.data;
   } catch (error) {
- console.log("No request found")
+//  console.log("No request found")
   }
 }
 export const callLoadComForLevel2=async(empid)=>{
@@ -101,7 +101,7 @@ try {
     const response = await axios.get(`${url}/seminar/completionloadforlevel2/data_management_seminar/${deptid}/${empid}`);
     return response.data;
   } catch (error) {
- console.log("No request found")
+//  console.log("No request found")
   }
 }
 

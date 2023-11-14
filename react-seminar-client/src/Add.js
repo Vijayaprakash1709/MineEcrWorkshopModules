@@ -276,7 +276,7 @@ export const Add=()=>{
                                     
                                     // temp=val.sub_report_id
                                     
-                                    return (<option key={val.sub_report_id} value={`data_management_${val.sub_report}`}>{val.sub_report}</option>)
+                                    return (<option key={val.sub_report_id} value={`${val.table_name}`}>{val.sub_report}</option>)
                                     
                                 })
 

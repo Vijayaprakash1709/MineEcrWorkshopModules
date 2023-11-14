@@ -85,7 +85,7 @@ console.log(newFileName)
             ...formData,
             event_po: arrayAsString,
           })
-          alert(arrayAsString)
+          // alert(arrayAsString)
         }
         catch(err){
 
@@ -181,6 +181,7 @@ let random =Math.random()*Math.random()*1;
             
            
         }
+        alert("File uploaded")
       }
       const handleUpload2 = () => {
         if (selectedFile3 && newFileName) {
@@ -301,6 +302,7 @@ let random =Math.random()*Math.random()*1;
 
 
       const handleUpload1 = () => {
+
         if (selectedFile2 && newFileName) {
             const formData2 = new FormData();
             const currentDate = new Date();
@@ -340,6 +342,7 @@ let random =Math.random()*Math.random()*1;
                 handleUpload3();
                 handleUpload4();
                 handleUpload();
+                
 
         }
     }
@@ -354,7 +357,7 @@ let random =Math.random()*Math.random()*1;
             // alert("Submit working")
             
             // Access form data as formData.event_budget_utilized, formData.event_photo_1, etc.
-            alert(formData);
+            // alert(formData);
             console.log(formData)
             // alert(Data.report_id)
             try{
