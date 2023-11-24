@@ -290,10 +290,12 @@ input[type="submit"]:hover {
 }
 
 th, td {
-  padding: 7px; /* Adjust as needed */
+  height:60px;
+  padding: 10px; /* Adjust as needed */
   text-align: center;
-  border-bottom: 1px solid #ddd;
-  font-size: 14px;
+  justify-content: center;
+  border-bottom: 2px solid #fff9f9;
+  font-size: 15px;
   text-decoration: none;
 }
 

@@ -8,6 +8,7 @@ import Image from './logo.png';
 import Image2 from './logo2.png';
 import Image3 from './logo3.jpg';
 import Image4 from './logo4.jpg';
+//import Img6001 from'./6001.jpeg';
 
 
 export const CreateEvent=()=>{
@@ -39,10 +40,13 @@ const viewPdf1=async(report_id)=>{
     try {
       
       
-      const res = await axios.get(`http://localhost:1234/seminar/data/${id}`);
+      const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id}`);
       // console.log("hai");
       const data = res.data;
-
+      //var sign = 'D:\\React\\Muthayammal\\MuthayammalAutomation\\MineEcrWorkshopModules\\react-seminar-client\\src\\'+`${data.lvl_1_proposal_sign}`+'.jpeg';
+      var sign = `/Project_images/${data.lvl_1_proposal_sign}.jpeg`;
+      // alert(sign);
+      
       const doc = new jsPDF();
       
 
@@ -78,7 +82,7 @@ doc.text('1.', 12, 65);
 doc.rect(20, 55, 90, 20).stroke();
 doc.text('Nature of the Event:\nConference/Technical Symposium/Workshop/\nSeminar/Guest/Lecture/FDP/Any other',22, 61);
 doc.rect(110, 55, 90, 20).stroke();
-doc.text(`${data.event_name}`, 113, 65);//Nature of the Event
+doc.text(`${data.sub_report}`, 113, 65);//Nature of the Event
 
 
 doc.rect(10, 75, 10, 10).stroke();
@@ -200,6 +204,9 @@ doc.text('', 135, 251);
 doc.setFont("times","bold");
 
 doc.text('* Attach Invitation Brochure', 15, 265);
+// let temp=`${data.lvl1_proposal_sign}`
+doc.addImage(sign, 'JPEG', 151,258, 25, 20);
+// doc.addImage(Img6001, 'JPEG', 151,258, 25, 20);
 doc.text('HoD', 155, 275);
 doc.text('Approved Not Approved', 16, 280);
 doc.text('Principal', 155, 290);
@@ -283,9 +290,10 @@ doc.text('Principal', 155, 290);
         try {
           
           
-          const res = await axios.get(`http://localhost:1234/seminar/data/${id1}`);
+          const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id1}`);
           // console.log("hai");
           const data = res.data;
+          var atten = `/Project_images/attendence.jpg`;
     
           const doc = new jsPDF();
     
@@ -323,7 +331,7 @@ doc.text('Principal', 155, 290);
     doc.rect(20, 55, 90, 15).stroke();
     doc.text('Nature of the Event:\nConference/Technical Symposium/Workshop/\nSeminar/Guest/Lecture/FDP/Any other',22, 61);
     doc.rect(110, 55, 90, 15).stroke();
-    doc.text(`${data.event_name}`, 113, 65);///Nature of the Event 
+    doc.text(`${data.sub_report}`, 113, 65);///Nature of the Event 
     doc.setFontSize(11);
     
     
@@ -524,7 +532,7 @@ doc.text('Principal', 155, 290);
     doc.text("ECR-Enclosures", 90, 40);
     doc.text("Name of the Event:", 10, 50);
     doc.setFont('times', '');
-    doc.text(`${data.event_name}`, 50, 50); //name of the event
+    doc.text(`${data.sub_report}`, 50, 50); //name of the event
     doc.setFont('times', 'bold');
     doc.text("Date of the Event Conducted:", 10, 57);
     doc.setFont('times', '');
@@ -697,7 +705,7 @@ doc.text('Principal', 155, 290);
     doc.rect(20, 55, 90, 20).stroke();
     doc.text('Nature of the Event:\nConference/Technical Symposium/Workshop/\nSeminar/Guest/Lecture/FDP/Any other',22, 61);
     doc.rect(110, 55, 90, 20).stroke();
-    doc.text(`${data.event_name}`, 113, 65);//Nature of the Event
+    doc.text(`${data.sub_report}`, 113, 65);//Nature of the Event
     
     
     doc.rect(10, 75, 10, 10).stroke();
@@ -1201,7 +1209,10 @@ doc.text('Principal', 155, 290);
     
     doc.rect(10,90,95,105)
     doc.rect(105,90,95,105)
-    
+
+    //////////////////////////Attendence Demo////////////////////////////////////
+    doc.addPage();
+    doc.addImage(atten, 'JPG', 10, 3, 180, 300);
     ////////////////////////////////////////Budget Utilized//////////////////////////////////
     
     
@@ -1277,7 +1288,7 @@ doc.text('Principal', 155, 290);
     doc.text("Nature of the Event",23,50)
     doc.rect(100,45,100,8).stroke()
     doc.setFont("times",'');
-    doc.text(`${data.event_name}`,103,50)
+    doc.text(`${data.sub_report}`,103,50)
     doc.rect(20,53,80,8).stroke()
     doc.setFont("times",'bold')
     doc.text("Title of the Event",23,58)
@@ -1443,6 +1454,7 @@ doc.text('Principal', 155, 290);
                     <h1 class="recent-Articles">Your Reports</h1>
                     <a className="topic-heading" href="/add"><button class="view" id="addButton">+ Add</button></a>
                               </div>
+                              <div className='table-responsive text-nowrap'>
    <table className='table table-striped '>
                     <thead>
                         <tr>
@@ -1474,8 +1486,8 @@ doc.text('Principal', 155, 290);
                                     <td>{data.report_id}</td>
                                     <td>{data.event_title}</td>
                                     <td>{data.event_date.split('-').reverse().join('-')}</td>
-                                    <td>ECR</td>
-                                    <td>{(data.event_name)}</td>
+                                    <td>{data.major_report}</td>
+                                    <td>{(data.sub_report)}</td>
                                     {/* <td><a className="topic-heading" href="/ecrInput"><button type="button" className="btn btn-outline-info col-3" onClick={onClicked(data.report_id)}>{data.report_id}</button></a></td> */}
                                     <td>{data.proposal_date.split('-').reverse().join('-')}</td>
                                    
@@ -1628,7 +1640,7 @@ doc.text('Principal', 155, 290);
                             ))
                         }
                     </tbody>
-                </table>
+                </table></div>
                 </div>
                    </div>
        

@@ -13,7 +13,7 @@ router.use(cors())
 // Set up the storage for uploaded files
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'D:\Project_Images\\'); // Specify the directory where you want to store uploaded images
+        cb(null, 'D:/React/Muthayammal/MuthayammalAutomation/MineEcrWorkshopModules/react-seminar-client/public/Project_Images/'); // Specify the directory where you want to store uploaded images
     },
     filename: (req, file, cb) => {
         // const currentDate = new Date();

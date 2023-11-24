@@ -21,7 +21,7 @@ route.get('/dropdownMajorType',async(req,res)=>{
 })
 
 route.get('/dropdownSubTypeWithMajor/:majorId',async(req,res)=>{
-    let sql="select * from data_sub_report_type where major_report_id = ?"
+    let sql="SELECT * FROM data_sub_report_type INNER JOIN data_major_report_type ON data_sub_report_type.major_report_id = data_major_report_type.major_report_id WHERE data_sub_report_type.major_report_id = ?"
     base.query(sql,[req.params.majorId],(err,rows)=>{
         if(err){
             res.status(500).json({error:err.message})
@@ -120,7 +120,7 @@ route.get('/dept/:obj',async(req,res)=>{
     // console.log(req.params.obj)
     let received=req.params.obj.split("-")
     console.log(received)
-    base.query("select * from data_management_seminar where dept_id in(?)",[received],(err,rows)=>{
+    base.query("SELECT * FROM data_management_seminar AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where dept_id=?",[received],(err,rows)=>{
         if(err){
             res.status(500).json({error:err.message})
             return
@@ -207,7 +207,7 @@ route.get('/loadforlevel1/:tableName/:deptId/:empId',async(req,res)=>{
             res.status(404).json({error:"No matches"})
             return
         }
-        sql=`select * from ${req.params.tableName} where report_proposal_status=0 and final_proposal_status=0 and lvl_1_proposal_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
+        sql=`select * from ${req.params.tableName}   AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id  where report_proposal_status=0 and lvl_1_proposal_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
         base.query(sql,[dId],(err,rows)=>{
             if(err){res.status(500).json({error:err.message});return;}
             if(row.length==0){res.status(404).json({error:"Nothing to show"})}
@@ -352,7 +352,7 @@ route.get('/loadforlevel2/:tableName/:deptId/:empId',async(req,res)=>{
             res.status(404).json({error:"No matches"})
             return
         }
-        sql=`select * from ${req.params.tableName} where report_proposal_status=1 and lvl_2_proposal_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
+        sql=`select * from ${req.params.tableName} AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where report_proposal_status=1 and lvl_2_proposal_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
         base.query(sql,[dId],(err,rows)=>{
             if(err){res.status(500).json({error:err.message});return;}
             if(row.length==0){res.status(404).json({error:"Nothing to show"})}
@@ -890,7 +890,7 @@ route.get('/completionloadforlevel1/:tableName/:deptId/:empId',async(req,res)=>{
             res.status(404).json({error:"No matches"})
             return
         }
-        sql=`select * from ${req.params.tableName} where completion=1 and final_proposal_status=1 and lvl_1_completion_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
+        sql=`select * from ${req.params.tableName}  AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where completion=1 and final_proposal_status=1 and lvl_1_completion_sign is null and report_completion_status=0 and final_completion_status=0 and final_report_status=0 and dept_id=?`
         base.query(sql,[dId],(err,rows)=>{
             if(err){res.status(500).json({error:err.message});return;}
             if(row.length==0){res.status(404).json({error:"Nothing to show"})}
@@ -1035,7 +1035,7 @@ route.get('/completionloadforlevel2/:tableName/:deptId/:empId',async(req,res)=>{
             res.status(404).json({error:"No matches"})
             return
         }
-        sql=`select * from ${req.params.tableName} where completion=1 and report_completion_status=1 and lvl_2_completion_sign is null and final_proposal_status=1 and final_completion_status=0 and final_report_status=0 and dept_id=?`
+        sql=`select * from ${req.params.tableName}  AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where completion=1 and report_completion_status=1 and lvl_2_completion_sign is null and final_proposal_status=1 and final_completion_status=0 and final_report_status=0 and dept_id=?`
         base.query(sql,[dId],(err,rows)=>{
             if(err){res.status(500).json({error:err.message});return;}
             if(row.length==0){res.status(404).json({error:"Nothing to show"})}
@@ -1697,7 +1697,7 @@ route.get('/getAcdYrWithSubType/:tableName', async (req, res) => {
 });
 route.get('/data/:report_id', (req, res) => {
     const report_id = req.params.report_id;
-    const sql =  `SELECT * FROM data_management_seminar where report_id=?`;
+    const sql =  `SELECT * FROM data_management_seminar AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where report_id=?`;
     
   base.query(sql,[report_id], (err, results) => {
       if (err) throw err;

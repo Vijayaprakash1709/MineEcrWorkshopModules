@@ -35,7 +35,7 @@ viewPdf(temp.report_id);
     try {
       
       
-      const res = await axios.get(`http://localhost:1234/seminar/data/${id}`);
+      const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id}`);
       // console.log("hai");
       const data = res.data;
 
@@ -242,7 +242,7 @@ doc.text('Principal', 155, 290);
         const temp = await loadForLevel1(logged.dept_id,logged.faculty_id)
         setEcrs(temp)
         }catch(err){
-            alert("No Request found")
+            // alert("No Request found")
         }
         // alert("")
     }

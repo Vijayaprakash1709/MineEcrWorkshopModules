@@ -23,7 +23,7 @@ export const Add=()=>{
         fillPorposals()
        
      
-      axios.get('http://localhost:1234/seminar/find')
+      axios.get('http://172.20.176.72:1234/seminar/find')
         .then((response) => {
         //   console.log(response);
           setOptions(response.data.rows);
@@ -38,7 +38,7 @@ export const Add=()=>{
   
 
     const options = option.map((val, key) => ({
-        value: val.faculty_name,
+        value: val.faculty_id+'-'+val.faculty_name,
         label: val.faculty_id+'-'+val.faculty_name+'-'+val.dept,
       }));
     // console.log(facultySelect);
@@ -100,7 +100,9 @@ export const Add=()=>{
             // alert(t)
         }
     const[year,setYear]=useState([])
-        const Acad=async()=>{
+    const[maj,setMaj]=useState([])
+    
+       const Acad=async()=>{
             let sid=seminar.event_name;
             try{
             const t = await Academic(sid)
@@ -123,7 +125,7 @@ export const Add=()=>{
             setSub(t)
             // alert(t)
         }
-      
+       
 
     const[facid,setFacid]=useState([])
 
@@ -193,6 +195,12 @@ export const Add=()=>{
             }
             else if(name==="major_id"){
                 Sub(value)
+                setMaj(value)
+                // alert(sub.major_report)
+                
+                // alert(major.major_report[value])
+               
+
                 return{
                     ...old,
                     [name]:parseInt(value)
@@ -200,6 +208,7 @@ export const Add=()=>{
             }
             else if(name==="event_coordinator"){
                 // alert("called")
+                
                 return{
                     ...old,
                     [name]:value
@@ -207,6 +216,7 @@ export const Add=()=>{
             }
             else if(name==="event_date"){
                 // Maj()
+               
                
             // Ven()
                 return{
@@ -231,6 +241,8 @@ export const Add=()=>{
             alert("Error in entering data")
         }
         setInformation(temp.message)
+        window.location.assign("/ecr")
+
     }
 
     return(
@@ -263,8 +275,10 @@ export const Add=()=>{
      <select name="major_id" value={seminar.major_id} onChange={infoCollect}>
   <option value="">Select Major Type .......</option>
   {
+    // let t=0;
                                 major.map((val,key)=>{
-                                    return (<option key={val.major_report_id} value={val.major_report_id}>{val.major_report}</option>)
+                                    
+                                    return (<option key={val.major_report_id}  value={val.major_report_id}>{val.major_report}</option>)
                                 })
                             }
 </select>
@@ -300,7 +314,7 @@ export const Add=()=>{
 
                     <div className="form group">
       <label htmlFor="event_sponsor">Colloborating/Sponsored Agency 1:</label>
-      <input type="text" name="event_sponsor" value={seminar.major_id} required onChange={infoCollect}placeholder="Event Sponsor" className="form-control" /><br />
+      <input type="text" name="event_sponsor" value={maj} required onChange={infoCollect}placeholder="Event Sponsor" className="form-control" readOnly/><br />
       </div>
       <div className="form group">
       <label htmlFor="event_sponsor">Colloborating/Sponsored Agency 2:</label>

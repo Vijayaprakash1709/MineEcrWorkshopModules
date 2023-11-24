@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url="http://localhost:1234"
+const url="http://172.20.176.72:1234"
 export const onLogin=async(obj)=>{
    try{ const returned = await axios.post(`${url}/login`,obj)
     return returned.data

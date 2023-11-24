@@ -31,7 +31,7 @@ export const ViewSeminar=()=>{
     try {
       
       
-      const res = await axios.get(`http://localhost:1234/seminar/data/${id}`);
+      const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id}`);
       // console.log("hai");
       const data = res.data;
 
@@ -70,7 +70,7 @@ doc.text('1.', 12, 65);
 doc.rect(20, 55, 90, 20).stroke();
 doc.text('Nature of the Event:\nConference/Technical Symposium/Workshop/\nSeminar/Guest/Lecture/FDP/Any other',22, 61);
 doc.rect(110, 55, 90, 20).stroke();
-doc.text(`${data.event_name}`, 113, 65);//Nature of the Event
+doc.text(`${data.sub_report}`, 113, 65);//Nature of the Event
 
 
 doc.rect(10, 75, 10, 10).stroke();
@@ -283,7 +283,7 @@ doc.text('Principal', 155, 290);
         try {
           
           
-          const res = await axios.get(`http://localhost:1234/seminar/data/${id1}`);
+          const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id1}`);
           // console.log("hai");
           const data = res.data;
     
@@ -323,7 +323,7 @@ doc.text('Principal', 155, 290);
     doc.rect(20, 55, 90, 15).stroke();
     doc.text('Nature of the Event:\nConference/Technical Symposium/Workshop/\nSeminar/Guest/Lecture/FDP/Any other',22, 61);
     doc.rect(110, 55, 90, 15).stroke();
-    doc.text(`${data.event_name}`, 113, 65);///Nature of the Event 
+    doc.text(`${data.sub_report}`, 113, 65);///Nature of the Event 
     doc.setFontSize(11);
     
     
@@ -524,7 +524,7 @@ doc.text('Principal', 155, 290);
     doc.text("ECR-Enclosures", 90, 40);
     doc.text("Name of the Event:", 10, 50);
     doc.setFont('times', '');
-    doc.text(`${data.event_name}`, 50, 50); //name of the event
+    doc.text(`${data.sub_report}`, 50, 50); //name of the event
     doc.setFont('times', 'bold');
     doc.text("Date of the Event Conducted:", 10, 57);
     doc.setFont('times', '');
@@ -697,7 +697,7 @@ doc.text('Principal', 155, 290);
     doc.rect(20, 55, 90, 20).stroke();
     doc.text('Nature of the Event:\nConference/Technical Symposium/Workshop/\nSeminar/Guest/Lecture/FDP/Any other',22, 61);
     doc.rect(110, 55, 90, 20).stroke();
-    doc.text(`${data.event_name}`, 113, 65);//Nature of the Event
+    doc.text(`${data.sub_report}`, 113, 65);//Nature of the Event
     
     
     doc.rect(10, 75, 10, 10).stroke();
@@ -1277,7 +1277,7 @@ doc.text('Principal', 155, 290);
     doc.text("Nature of the Event",23,50)
     doc.rect(100,45,100,8).stroke()
     doc.setFont("times",'');
-    doc.text(`${data.event_name}`,103,50)
+    doc.text(`${data.sub_report}`,103,50)
     doc.rect(20,53,80,8).stroke()
     doc.setFont("times",'bold')
     doc.text("Title of the Event",23,58)
@@ -1449,18 +1449,18 @@ doc.text('Principal', 155, 290);
                                             <tr>
                                                 <td>{val.report_id}</td>
                                                 <td>{val.event_title}</td>
-                                                <td>ECR</td>
-                                                <td>{val.event_name}</td>
+                                                <td>{val.major_report}</td>
+                                                <td>{val.sub_report}</td>
                                                 
                                                 <td>{val.event_coordinator}</td>
                                                 <td className="row justify-content-evenly">
                                                 <button type="button" onClick={async()=>{
                                                
                                                         accept(val.dept_id,val.report_id,val.completion);
-                                                    }} className="btn btn-success col-4">Accept</button>
+                                                    }} className="btn btn-success col-4"  >Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
                                                     </td>
-                                                    <td><button
+                                                    <td><button className="btn btn-dark col-4"
                                                     style={{
                                                         backgroundColor: '#0000ff', 
                                                         color: 'white', 
@@ -1483,8 +1483,8 @@ doc.text('Principal', 155, 290);
                                             <tr>
                                                 <td>{val.report_id}</td>
                                                 <td>{val.event_title}</td>
-                                                <td>ECR</td>
-                                                <td>{val.event_name}</td>
+                                                <td>{val.major_report}</td>
+                                                <td>{val.sub_report}</td>
                                                 
                                                 <td>{val.event_coordinator}</td>
                                                 <td className="row justify-content-evenly">
@@ -1494,12 +1494,14 @@ doc.text('Principal', 155, 290);
                                                     }} className="btn btn-success col-4">Accept</button>
                                                     <button type="button" className="btn btn-dark col-4">Reject</button>
                                                     </td>
-                                                    <td><button
+                                                    <td><button className="btn btn-dark col-4"
   style={{
     backgroundColor: '#f29b44', // Background color
-    color: 'white', // Text color
+    color: 'white', 
+    // size:'10px',// Text color
+    // height:'4 px',
     width: '90%', // Button width
-    
+
     padding: '10px', // Padding
     borderRadius: '5px', // Border radius
     cursor: 'pointer', // Cursor style
