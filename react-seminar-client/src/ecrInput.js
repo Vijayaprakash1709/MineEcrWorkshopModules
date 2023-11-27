@@ -189,7 +189,7 @@ let random =Math.random()*Math.random()*1;
           
        
     
-          fetch('http://172.20.176.72:1234/ecr/upload1', {
+          fetch('http://localhost:1234/ecr/upload1', {
             method: 'POST',
             body: formData1,
           })
@@ -242,7 +242,7 @@ let random =Math.random()*Math.random()*1;
               event_photo_4: name4,
               event_photo_5: name5,
             });
-            fetch('http://172.20.176.72:1234/ecr/upload1', {
+            fetch('http://localhost:1234/ecr/upload1', {
                 method: 'POST',
                 body: formData3,
               })
@@ -281,7 +281,7 @@ let random =Math.random()*Math.random()*1;
             ...formData,
             event_photo_4: name4,
           })
-          fetch('http://172.20.176.72:1234/ecr/upload1', {
+          fetch('http://localhost:1234/ecr/upload1', {
               method: 'POST',
               body: formData4,
             })
@@ -320,7 +320,7 @@ let random =Math.random()*Math.random()*1;
           ...formData,
           event_photo_5: name5,
         })
-        fetch('http://172.20.176.72:1234/ecr/upload1', {
+        fetch('http://localhost:1234/ecr/upload1', {
             method: 'POST',
             body: formData5,
           })
@@ -372,7 +372,7 @@ let random =Math.random()*Math.random()*1;
               event_photo_4: name4,
               event_photo_5: name5,
             });
-            fetch('http://172.20.176.72:1234/ecr/upload1', {
+            fetch('http://localhost:1234/ecr/upload1', {
                 method: 'POST',
                 body: formData2,
               })

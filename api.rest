@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   
     
-    "http://172.20.176.72:1234":"Workshop",
+    "http://localhost:1234":"Workshop",
     "event_title":"Express",
     "event_organizer":"CSE",
     "event_sponsor":"CSI & Management",
@@ -84,7 +84,7 @@ Content-Type: application/json
 
 {
     "report_id":"RPT5005",
-    "http://172.20.176.72:1234":"seminar",
+    "http://localhost:1234":"seminar",
     "event_title":"Vue JS",
     "event_organizer":"CSE",
     "event_sponsor":"CSI & Management",

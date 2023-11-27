@@ -40,7 +40,7 @@ const viewPdf1=async(report_id)=>{
     try {
       
       
-      const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id}`);
+      const res = await axios.get(`http://localhost:1234/seminar/data/${id}`);
       // console.log("hai");
       const data = res.data;
       //var sign = 'D:\\React\\Muthayammal\\MuthayammalAutomation\\MineEcrWorkshopModules\\react-seminar-client\\src\\'+`${data.lvl_1_proposal_sign}`+'.jpeg';
@@ -290,7 +290,7 @@ doc.text('Principal', 155, 290);
         try {
           
           
-          const res = await axios.get(`http://172.20.176.72:1234/seminar/data/${id1}`);
+          const res = await axios.get(`http://localhost:1234/seminar/data/${id1}`);
           // console.log("hai");
           const data = res.data;
           var atten = `/Project_images/attendence.jpg`;
@@ -1211,8 +1211,8 @@ doc.text('Principal', 155, 290);
     doc.rect(105,90,95,105)
 
     //////////////////////////Attendence Demo////////////////////////////////////
-    doc.addPage();
-    doc.addImage(atten, 'JPG', 10, 3, 180, 300);
+    // doc.addPage();
+    // doc.addImage(atten, 'JPG', 10, 3, 180, 300);
     ////////////////////////////////////////Budget Utilized//////////////////////////////////
     
     
