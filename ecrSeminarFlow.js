@@ -120,7 +120,7 @@ route.get('/dept/:obj',async(req,res)=>{
     // console.log(req.params.obj)
     let received=req.params.obj.split("-")
     console.log(received)
-    base.query("SELECT * FROM data_management_seminar AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where dept_id=?",[received],(err,rows)=>{
+    base.query("SELECT * FROM data_management_seminar AS seminar INNER JOIN data_sub_report_type AS sub_report_type ON seminar.event_name = sub_report_type.table_name INNER JOIN data_major_report_type AS major_report_type ON sub_report_type.major_report_id = major_report_type.major_report_id where dept_id=?"+"ORDER BY report_id DESC",[received],(err,rows)=>{
         if(err){
             res.status(500).json({error:err.message})
             return
@@ -184,7 +184,7 @@ route.get('/authorities/:deptId',async(req,res)=>{
 route.post('/ecrProposal/:tableName',async(req,res)=>{
     // receive the request from client
     const{proposal_date,report_id,event_name,event_title,event_organizer,event_sponsor,event_date,event_venue,guest_name,guest_designation,guest_address,guest_phone_number,guest_email,student_count,faculty_count,others_count,event_budget,event_coordinator,coordinator_emp_id,coordinator_phone_number,coordinator_designation,event_date_from,event_date_to,acdyr_id,dept_id,sem_id}=req.body
-    sql=`insert into ${req.params.tableName}(proposal_date,report_id,event_name,event_title,event_organizer,event_sponsor,event_date,event_venue,guest_name,guest_designation,guest_address,guest_phone_number,guest_email,student_count,faculty_count,others_count,event_budget,event_coordinator,coordinator_emp_id,coordinator_phone_number,coordinator_designation,event_date_from,event_date_to,acdyr_id,dept_id,sem_id,report_proposal_status,final_proposal_status,report_completion_status,final_completion_status,final_report_status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,0,0,0)`
+    sql=`insert into ${req.params.tableName}(proposal_date,report_id,event_name,event_title,event_organizer,event_sponsor,event_date,event_venue,guest_name,guest_designation,guest_address,guest_phone_number,guest_email,student_count,faculty_count,others_count,event_budget,event_coordinator,student,coordinator_emp_id,coordinator_phone_number,coordinator_designation,event_date_from,event_date_to,acdyr_id,dept_id,sem_id,report_proposal_status,final_proposal_status,report_completion_status,final_completion_status,final_report_status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,0,0,0)`
         base.query(sql,[proposal_date,report_id,event_name,event_title,event_organizer,event_sponsor,event_date,event_venue,guest_name,guest_designation,guest_address,guest_phone_number,guest_email,student_count,faculty_count,others_count,event_budget,event_coordinator,coordinator_emp_id,coordinator_phone_number,coordinator_designation,event_date_from,event_date_to,acdyr_id,dept_id,sem_id],(err,ack)=>{
             if(err){
                 res.status(500).json({error:err.message})
@@ -193,6 +193,9 @@ route.post('/ecrProposal/:tableName',async(req,res)=>{
             res.status(200).json({message:"Workshop Proposal has sent"})
         })
 })
+
+
+
 
 route.get('/loadforlevel1/:tableName/:deptId/:empId',async(req,res)=>{
     const dId=req.params.deptId
@@ -215,6 +218,9 @@ route.get('/loadforlevel1/:tableName/:deptId/:empId',async(req,res)=>{
         })
     })
 })
+
+
+
 
 route.put('/acknowledgelevel1/:tableName/:deptId/:empId/:report_id',async(req,res)=>{
     const dId=req.params.deptId
@@ -1528,6 +1534,7 @@ route.put('/completionacknowledgelevel5/:tableName/:deptId/:empId/:report_id',as
 })
 
 
+
 route.put('/reject/:tableName/:deptId/:empId/:report_id',async(req,res)=>{
     const dId=req.params.deptId
     const eId=req.params.empId
@@ -1705,6 +1712,57 @@ route.get('/data/:report_id', (req, res) => {
       res.json(results[0]);
     });
   });
+
+
+
+
+
+// const result=[];
+// const std_id= [];
+
+// route.get('/compare/:roll', (req, res) => {
+  
+//     const sql = "select count(*)>0 as number from data_student where student_roll_number=?"
+//     base.query(sql,[req.params.roll],(err,results)=>{
+//         if(err){
+//             res.status(500).json({"error":err.message})
+//             return ;
+//         }
+//         res.status(200).json({results})
+//         res.json(results[0]);
+//     })
+// });
+route.get('/compare/:roll', (req, res) => {
+    const rollNumbers = req.params.roll.split(',');
+
+    // Validate that rollNumbers is not empty or contains invalid values
+
+    const sqlCount = "SELECT COUNT(*) AS count FROM data_student WHERE student_roll_number IN (?)";
+    const sqlData = "SELECT * FROM data_student WHERE student_roll_number IN (?)";
+
+    base.query(sqlCount, [rollNumbers], (err, countResult) => {
+        if (err) {
+            res.status(500).json({ "error": err.message });
+            return;
+        }
+
+        const count = countResult[0].count;
+
+        if (count > 0) {
+            base.query(sqlData, [rollNumbers], (err, dataResult) => {
+                if (err) {
+                    res.status(500).json({ "error": err.message });
+                    return;
+                }
+
+                res.status(200).json({ count, data: dataResult });
+            });
+        } else {
+            res.status(200).json({ count, data: [] });
+        }
+    });
+});
+
 
 
 

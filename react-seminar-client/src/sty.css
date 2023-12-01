@@ -290,11 +290,18 @@ input[type="submit"]:hover {
 }
 
 th, td {
+  
   height:60px;
-  padding: 10px; /* Adjust as needed */
+  padding: 1px; /* Adjust as needed */
   text-align: center;
-  justify-content: center;
+  justify-content:space-evenly;
+  place-items:center;
   border-bottom: 2px solid #fff9f9;
+  margin-top:20px;
+  /* border-collapse: collapse; */
+  /* table-layout: fixed; */
+  /* justify-content: end; */
+  word-wrap: normal;
   font-size: 15px;
   text-decoration: none;
 }

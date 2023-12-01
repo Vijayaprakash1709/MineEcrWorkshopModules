@@ -66,6 +66,7 @@ export const Add=()=>{
         "others_count":0,
         "event_budget":0,
         "event_coordinator":"",
+        "student":"",
         "coordinator_emp_id":0,
         "coordinator_phone_number":0,
         "coordinator_designation":0,
@@ -186,7 +187,7 @@ export const Add=()=>{
     const infoCollect=(eve)=>{
         const{name,value}=eve.target
         setSeminar((old)=>{
-            if(name==="event_name"||name==="event_title"||name==="event_venue"||name==="event_organizer"||name==="event_sponsor"||name==="guest_name"||name==="guest_designation"||name==="guest_address"||name==="guest_email"||name==="proposal_date"||name==="acdyr_id"){
+            if(name==="student"||name==="event_name"||name==="event_title"||name==="event_venue"||name==="event_organizer"||name==="event_sponsor"||name==="guest_name"||name==="guest_designation"||name==="guest_address"||name==="guest_email"||name==="proposal_date"||name==="acdyr_id"){
                 
                 return{
                     ...old,
@@ -387,6 +388,12 @@ export const Add=()=>{
                             }
         
         </select> */}
+
+
+<label htmlFor="student">student</label>
+      <input type="text" name="student" value={seminar.student} required onChange={infoCollect}/>
+      
+      
 
 <label for="event_coordinator">Event Co-ordinator : </label>
  <Select

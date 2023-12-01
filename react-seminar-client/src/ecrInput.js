@@ -2,6 +2,8 @@ import React, { useState ,useEffect} from 'react';
 import { onTable ,onComplete} from './connect';
 import './sty.css';
 import { format } from 'date-fns';
+import Select from 'react-select';
+import axios from 'axios';
 
 
 export const EcrInput = () => {
@@ -34,6 +36,57 @@ export const EcrInput = () => {
     // const handlereport_id = (e) => {
     //     setreport_id(e.target.value);
     //   };
+
+   const [finalArr,setFinalArr]=useState([])
+    const [selectedOptions, setSelectedOptions] = useState([])
+    /////////////////////////////////////////////////////////////////////
+  
+    const handleChange = (event) => {
+      const inputValue = event.target.value;
+      const regexPattern = /^(\d{2}[A-Z]{2}\d{3},)*\d{2}[A-Z]{2}\d{3}$/;
+    
+      if (regexPattern.test(inputValue)) {
+        const valuesArray = inputValue
+          .split(',')
+          .map((value) => ({
+            value: value.trim(),
+            label: value.trim(),
+          }));
+        setSelectedOptions(valuesArray);
+      } else {
+        console.log('Invalid input format');
+      }
+    }
+    
+    const Validate = () => {
+      selectedOptions.forEach(item => {
+        CheckRollWithDb(item.value);
+      });
+    }
+    
+    const CheckRollWithDb = async (roll) => {
+      try {
+        const response = await axios.get(`http://localhost:1234/seminar/compare/${roll}`);
+    
+        if (response.data.count > 0) {
+          // alert(roll)
+          // finalArr.push(roll);
+          setFinalArr(roll)
+          
+          console.log(roll + " found");
+        } else {
+          console.log(roll + " not found");
+        }
+      } catch (error) {
+        console.error('Error checking roll with the database:', error.message);
+      }
+    }
+    // console.log(finalArr)
+    
+    // Call Validate when you want to check the rolls against the backend
+    // For example, if you have a button triggering the validation:
+    // <button onClick={Validate}>Check Rolls</button>
+    
 
     const submit=async()=>{
       console.log(formData)
@@ -442,12 +495,13 @@ let random =Math.random()*Math.random()*1;
   
     return (
         <>
-        
-    
+         <body>
+       {/* <div>  */}
+    {/* <div className="report-container"> */}
+     <div className="report-container" style={{justifyContent:'center'}}>
      <h2>.</h2>
      <div>
-        <p>.</p>
-        <p>.</p>
+      
      </div>
       <div>
         {/* <input type="file" accept="image/*" onChange={handleFileChange1} /> */}
@@ -469,7 +523,7 @@ let random =Math.random()*Math.random()*1;
         
       </div>
 
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}> */}
       
 
       <label htmlFor="event_photo_1">Photo 1:</label>
@@ -552,8 +606,48 @@ let random =Math.random()*Math.random()*1;
       <label htmlFor="event_description">About the Event Paragraph:</label>
       <input type="text" id="event_description" name="event_description" value={formData.event_description} onChange={handleInputChange}  /><br />
 
-      <input type="submit" value="Submit" style={{marginLeft:'40%'}}/>
-    </form>
+      
+      <div>
+      
+      <h1>Multi select</h1>
+      <h2>Multi-Select Using Comma-Separated Input</h2>
+
+      {/* input box for getting comma separated text from user */}
+      <input
+        type="text"
+        placeholder="Enter comma-separated values"
+        onChange={handleChange}
+      />
+    <button onClick={Validate}>Validate</button>
+      {/* dropdown that show the roll no entered like selected options */}
+      <Select
+        isMulti
+        name="event_coordinator"
+        options={finalArr}
+        value={finalArr}
+        onChange={selectedOptions}
+        isSearchable
+        placeholder="Select options..."
+        closeMenuOnSelect={false}
+      />
+
+      {/* just printing to check each numbers*/}
+      {/* {finalArr.map((item)=>{
+        console.log("hai")
+            return(
+                <div>
+                    <h4>{item}</h4>
+                </div>
+            )
+      })} */}
+
+{/* the result array is the array that has the comma separated text which is printed in console*/}
+
+    </div>
+  <input type="submit" value="Submit" onClick={handleSubmit} style={{marginLeft:'40%'}}/>
+    {/* </form> */}
+    </div>
+    </body>
       </>
     );
   }

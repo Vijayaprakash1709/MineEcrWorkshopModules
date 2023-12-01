@@ -100,6 +100,7 @@ Content-Type: application/json
     "others_count":0,
     "event_budget":40000,
     "event_coordinator":"Victor Prakash",
+    
     "coordinator_emp_id":6007,
     "coordinator_phone_number":9944085437,
     "coordinator_designation":406,
@@ -190,3 +191,4 @@ PUT http://localhost:1234/ecrWorkshop/completionacknowledgelevel2/1/RPT0000001
 
 
 GET http://localhost:1234/seminar/find
+

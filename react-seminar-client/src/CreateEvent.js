@@ -1415,7 +1415,23 @@ doc.text('Principal', 155, 290);
           console.error(err);
         }
       }
-   
+      const [currentPage, setCurrentPage] = useState(1);
+      const recordsPerPage = 15;
+    
+      // Calculate the index of the first and last records to display on the current page
+      const indexOfLastRecord = currentPage * recordsPerPage;
+      const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+      const currentRecords = allvalues.slice(indexOfFirstRecord, indexOfLastRecord);
+    
+      const totalPages = Math.ceil(allvalues.length / recordsPerPage);
+    
+      const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+      };
+    
+      const handlePrevPage = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+      };
 
 
     return(
@@ -1480,7 +1496,7 @@ doc.text('Principal', 155, 290);
                     </thead>
                     <tbody>
                         {
-                            allvalues.map((data)=>
+                           currentRecords.map((data)=>
                             (
                                 <tr>
                                     <td>{data.report_id}</td>
@@ -1488,8 +1504,7 @@ doc.text('Principal', 155, 290);
                                     <td>{data.event_date.split('-').reverse().join('-')}</td>
                                     <td>{data.major_report}</td>
                                     <td>{(data.sub_report)}</td>
-                                    {/* <td><a className="topic-heading" href="/ecrInput"><button type="button" className="btn btn-outline-info col-3" onClick={onClicked(data.report_id)}>{data.report_id}</button></a></td> */}
-                                    <td>{data.proposal_date.split('-').reverse().join('-')}</td>
+                                    <td>{data.proposal_date}</td>
                                    
                                   
                                     {
@@ -1498,7 +1513,6 @@ doc.text('Principal', 155, 290);
                
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
-                                        {/* <td></td> */}
                                         <td></td>
                                         <td>🕒Pending</td>
                                         <td>🕒Pending</td>
@@ -1513,7 +1527,7 @@ doc.text('Principal', 155, 290);
     cursor: 'pointer', // Cursor style
     border: 'none', // Remove the border
   }} type="button" onClick={async()=>{
-                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                      
                                                         pdfAccept(data.report_id);
                                                        
                                                     }} >View Proposal</button></td>
@@ -1539,7 +1553,7 @@ doc.text('Principal', 155, 290);
     cursor: 'pointer', // Cursor style
     border: 'none', // Remove the border
   }} type="button" onClick={async()=>{
-                                                        // alert(val.workshop_id+" "+val.dept_id)
+                                                        
                                                         pdfAccept(data.report_id);
                                                        
                                                     }} >View Proposal</button></td>
@@ -1555,7 +1569,7 @@ doc.text('Principal', 155, 290);
                                         <td>🕒Pending</td>
                                         <td><a className="topic-heading" href="/ecrInput"><button
   style={{
-    backgroundColor: ' #00997a', // Background color
+    backgroundColor: ' #00997a', 
     color: 'white', // Text color
     width: '90%', // Button width
     
@@ -1640,7 +1654,17 @@ doc.text('Principal', 155, 290);
                             ))
                         }
                     </tbody>
-                </table></div>
+                </table>
+                <div className="pagination" style={{gap:"50px", alignItems:"center", marginLeft:'35%'}}>
+        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+          Prev
+        </button>
+        
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div></div>
                 </div>
                    </div>
        
